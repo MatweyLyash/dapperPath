@@ -8,9 +8,11 @@
         xmlns:viewmodel ="clr-namespace:dapperPath.ViewModel"
         mc:Ignorable="d"
         Title="dapperPath" Height="1080" Width="1920" MinHeight="720" MinWidth="1080" WindowState="Maximized">
+    
     <Window.DataContext>
-        <viewmodel:MainViewModel/>
+        <viewmodel:BootsViewModel/>
     </Window.DataContext>
+    
     <Grid x:Name="Main" Background="#D9D9D9">
         <Grid.RowDefinitions>
             <RowDefinition Height="111*"/>
@@ -51,13 +53,13 @@
                                 <Setter Property="BorderBrush" Value="Transparent"/>
                             </Style>
                         </StackPanel.Resources>
-                        <Button  Command="{Binding OnFemaleFilter}">
+                        <Button  Command="{Binding GetFemaleBoots}">
                             <Button.Content>Женщинам</Button.Content>
                         </Button>
-                        <Button Command="{Binding OnMaleFilter}">
+                        <Button Command="{Binding GetMaleBoots}">
                             <Button.Content>Мужчинам</Button.Content>
                         </Button>
-                        <Button Click="SortKids">
+                        <Button >
                             <Button.Content>Детям</Button.Content>
                         </Button>
 
@@ -65,7 +67,7 @@
                 </Viewbox>
                 <Viewbox Grid.Column="2" Width="Auto">
                     <Border CornerRadius="20" Background="#EFEFEF" Margin="20 0 0 0" VerticalAlignment="Center">
-                        <TextBox BorderBrush="Transparent" Style="{StaticResource main_SearchField}" TextChanged="TBoxSearch_TextChanged" Name="TBoxSearch">
+                        <TextBox BorderBrush="Transparent" Style="{StaticResource main_SearchField}"  Name="TBoxSearch">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type materialDesign:SmartHint}">
                                     <Setter Property="VerticalAlignment" Value="Center"/>
@@ -124,7 +126,7 @@
 
             </Grid>
         </Border >
-        <Border x:Name="Filter_menu" Background="White" Grid.Row="1" Grid.RowSpan="2">
+        <Border x:Name="Filter_menu" Background="White" Grid.Row="1" Grid.RowSpan="3">
 
             <StackPanel x:Name="filter">
                 <StackPanel.Resources>
@@ -159,7 +161,9 @@
             </StackPanel>
 
         </Border>
-
+        <!--<Frame Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}">
+            
+        </Frame>-->
         <Border Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" >
     <ListView Name="LViewStuff" ItemsSource="{Binding Shoes}">
         <ListView.ItemsPanel>

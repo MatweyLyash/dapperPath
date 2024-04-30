@@ -15,10 +15,10 @@ namespace dapperPath.ViewModel
 {
     public class BootsViewModel : ViewModelBase
     {
-        private List<Shoes> _shoes;
+        private ObservableCollection<Shoes> _shoes;
        
 
-        public List<Shoes> Shoes {
+        public ObservableCollection<Shoes> Shoes {
             get
             {
                 return _shoes;
@@ -29,16 +29,16 @@ namespace dapperPath.ViewModel
                 RaisePropertyChanged(nameof(Shoes));
             }
         }
-        public List<Shoes> _totalShoes;
+        public ObservableCollection<Shoes> _totalShoes;
         private List<Shoes> currentStuff;
         public ICommand GetMaleBoots {  get; set; }
         public ICommand GetFemaleBoots { get; set; }
 
         public BootsViewModel()
         {
-            Shoes = new List<Shoes>();
+            Shoes = new ObservableCollection<Shoes>();
             currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
-            _totalShoes = currentStuff;
+            _totalShoes = new ObservableCollection<Shoes>(currentStuff);
             Shoes = _totalShoes;    
 
             GetFemaleBoots = new RelayCommand(FilterByFemale);
@@ -46,16 +46,12 @@ namespace dapperPath.ViewModel
         }
         public void FilterByFemale()
         {
-            Shoes.Clear();
-            foreach (var shoe in _totalShoes.Where(shoe => shoe.Sex == "W"))
-            {
-                Shoes.Add(shoe);
-            }
+       
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.Sex == "W"));
         }
 
         public void FilterByMale()
         {
-
             Shoes.Clear();
             foreach (var shoe in _totalShoes.Where(shoe => shoe.Sex == "M"))
             {
