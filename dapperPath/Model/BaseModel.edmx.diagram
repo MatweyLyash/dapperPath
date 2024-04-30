@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fec4789d4d724c758fa1c50274cdedc4" Name="Diagram1" ZoomLevel="80">
+        <EntityTypeShape EntityType="dapperpathModel.Cart" Width="1.5" PointX="7.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dapperpathModel.Orders" Width="1.5" PointX="13" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dapperpathModel.Reviews" Width="1.5" PointX="16.125" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="dapperpathModel.Shoes" Width="1.5" PointX="10.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="dapperpathModel.Users" Width="1.5" PointX="10.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dapperpathModel.Wishlist" Width="1.5" PointX="12.5" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="dapperpathModel.FK__Cart__ProductID__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="dapperpathModel.FK__Cart__UserID__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="dapperpathModel.FK__Orders__UserID__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="dapperpathModel.FK__Reviews__Product__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="dapperpathModel.FK__Reviews__UserID__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="dapperpathModel.FK__Wishlist__Produc__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="dapperpathModel.FK__Wishlist__UserID__5441852A" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
