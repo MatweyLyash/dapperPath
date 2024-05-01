@@ -21,7 +21,7 @@ namespace dapperPath.View
     /// </summary>
     public partial class ShoesPage : Page
     {
-        public ShoesPage(BootsViewModel bootsViewModel)
+        public ShoesPage(ShoesViewModel bootsViewModel)
         {
             InitializeComponent();
             DataContext = bootsViewModel;

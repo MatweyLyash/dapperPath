@@ -13,16 +13,14 @@ using System.Windows.Input;
 
 namespace dapperPath.ViewModel
 {
-    public class BootsViewModel : ViewModelBase
+    public class ShoesViewModel : ViewModelBase
     {
         private ObservableCollection<Shoes> _shoes;
        
 
         public ObservableCollection<Shoes> Shoes {
             get
-            {
-                return _shoes;
-            }
+            {return _shoes;}
             set
             {
                 _shoes = value;
@@ -33,16 +31,19 @@ namespace dapperPath.ViewModel
         private List<Shoes> currentStuff;
         public ICommand GetMaleBoots {  get; set; }
         public ICommand GetFemaleBoots { get; set; }
+        public ICommand GetAll {  get; set; }
 
-        public BootsViewModel()
+        public ShoesViewModel()
         {
             Shoes = new ObservableCollection<Shoes>();
             currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
             _totalShoes = new ObservableCollection<Shoes>(currentStuff);
-            Shoes = _totalShoes;    
+            Shoes = _totalShoes;   
 
             GetFemaleBoots = new RelayCommand(FilterByFemale);
             GetMaleBoots = new RelayCommand(FilterByMale);
+            GetAll = new RelayCommand(ShowAll);
+
         }
         public void FilterByFemale()
         {
@@ -57,6 +58,10 @@ namespace dapperPath.ViewModel
             {
                 Shoes.Add(shoe);
             }
+        }
+        public void ShowAll()
+        {
+            Shoes = new ObservableCollection<Shoes>(currentStuff);
         }
 
 

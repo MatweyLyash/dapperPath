@@ -27,9 +27,11 @@ namespace dapperPath.View
         public MainWindow()
         {
             InitializeComponent();
-            //mainViewModel = new MainViewModel();
-            //DataContext = mainViewModel;
+            mainViewModel = new MainViewModel();
+            DataContext = mainViewModel;
         }
+
+
 
         //private void UpdateStuff()
         //{

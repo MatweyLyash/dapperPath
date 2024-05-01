@@ -10,7 +10,7 @@
         Title="dapperPath" Height="1080" Width="1920" MinHeight="720" MinWidth="1080" WindowState="Maximized">
     
     <Window.DataContext>
-        <viewmodel:BootsViewModel/>
+        <viewmodel:MainViewModel/>
     </Window.DataContext>
     
     <Grid x:Name="Main" Background="#D9D9D9">
@@ -53,21 +53,21 @@
                                 <Setter Property="BorderBrush" Value="Transparent"/>
                             </Style>
                         </StackPanel.Resources>
-                        <Button  Command="{Binding GetFemaleBoots}">
+                        <Button Command="{Binding bootsViewModel.GetFemaleBoots}">
                             <Button.Content>Женщинам</Button.Content>
                         </Button>
-                        <Button Command="{Binding GetMaleBoots}">
+                        <Button Command="{Binding bootsViewModel.GetMaleBoots}" >
                             <Button.Content>Мужчинам</Button.Content>
                         </Button>
-                        <Button >
-                            <Button.Content>Детям</Button.Content>
+                        <Button Command="{Binding bootsViewModel.GetAll}" >
+                            <Button.Content>Все</Button.Content>
                         </Button>
 
                     </StackPanel>
                 </Viewbox>
                 <Viewbox Grid.Column="2" Width="Auto">
                     <Border CornerRadius="20" Background="#EFEFEF" Margin="20 0 0 0" VerticalAlignment="Center">
-                        <TextBox BorderBrush="Transparent" Style="{StaticResource main_SearchField}"  Name="TBoxSearch">
+                        <TextBox BorderBrush="Transparent" Style="{StaticResource main_SearchField}"  Name="TBoxSearch" VerticalAlignment="Center">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type materialDesign:SmartHint}">
                                     <Setter Property="VerticalAlignment" Value="Center"/>
@@ -161,49 +161,10 @@
             </StackPanel>
 
         </Border>
-        <!--<Frame Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}">
+        <Frame x:Name="MainContent" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}">
             
-        </Frame>-->
-        <Border Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" >
-    <ListView Name="LViewStuff" ItemsSource="{Binding Shoes}">
-        <ListView.ItemsPanel>
-            <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}}"/>
-            </ItemsPanelTemplate>
-        </ListView.ItemsPanel>
-        <ListView.ItemTemplate>
-            <DataTemplate >
-                <Grid x:Name="card" Margin="18" Width="200" Height="300">
-                    <Grid.RowDefinitions >
-                        <RowDefinition Height="200"></RowDefinition>
-                        <RowDefinition Height="20"></RowDefinition>
-                        <RowDefinition Height="25"></RowDefinition>
-                        <RowDefinition Height="50"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Viewbox Width="Auto">
-                        <Image Width="200" Grid.Row="0" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="center" >
-                            <Image.Source>
-                                <Binding Path="Image">
-                                    <Binding.TargetNullValue>
-                                        <ImageSource>/dapperPath;component/Resourses/Gallery/notFound.jpg</ImageSource>
-                                    </Binding.TargetNullValue>
-                                </Binding>
-                            </Image.Source>
-                        </Image>
-                    </Viewbox>
-                    <TextBlock Text="{Binding Title}" Style="{StaticResource card_name_stuff}"/>
-                    <TextBlock Text="{Binding Price, StringFormat={}{0:N2}BYN}" Style="{StaticResource card_cost_stuff}"/>
-                    <Button Grid.Row="3" HorizontalAlignment="Left">
-                        <Button.Content>Удалить</Button.Content>
-                    </Button>
-                    <Button Grid.Row="3" Background="Transparent"  HorizontalAlignment="Right">
-                        <Button.Content>Изменить</Button.Content>
-                    </Button>
-                </Grid>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
-</Border>
+        </Frame>
+ 
 
     </Grid>
 </Window>

@@ -19,11 +19,10 @@ namespace dapperPath.ViewModel
 {
     public class MainViewModel:ViewModelBase 
     {
-        public ICommand OnFemaleFilter {  get; set; }
-        public ICommand OnMaleFilter { get; set; }
-        public ICommand NavigateBoots { get;}
-        private BootsViewModel bootsViewModel { get; }
+        public ShoesViewModel bootsViewModel {  get; }
+
         private Page _currentPage;
+
         public Page CurrentPage
         {
             get { return _currentPage; }
@@ -34,38 +33,27 @@ namespace dapperPath.ViewModel
             }
         }
 
-
-        public ObservableCollection<Shoes> Shoes {
-            get
-            {
-                return bootsViewModel.Shoes;
-            }
-            set
-            {
-                bootsViewModel.Shoes = new ObservableCollection<Shoes>(value);
-            }
-            }
-
-
+        public ICommand NavigateBoots { get; }
+        public ICommand MainFilter { get; }
         public MainViewModel()
         {
+            bootsViewModel = new ShoesViewModel();
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
-            bootsViewModel = new BootsViewModel();
-            OnFemaleFilter = new RelayCommand(() => bootsViewModel.GetFemaleBoots.Execute(null));
-            OnMaleFilter = new RelayCommand(() => bootsViewModel.GetMaleBoots.Execute(null));
+
+            CurrentPage = new ShoesPage(bootsViewModel);
         }
-         private void NavigateToBootsPage()
+
+        private void NavigateToBootsPage()
         {
             CurrentPage = new ShoesPage(bootsViewModel);
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
 
     }
 }
