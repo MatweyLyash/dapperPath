@@ -91,6 +91,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\AddEditViewModel.cs" />
+    <Compile Include="ViewModel\CustomNavigate.cs" />
     <Compile Include="View\AddShoes.xaml.cs">
       <DependentUpon>AddShoes.xaml</DependentUpon>
     </Compile>

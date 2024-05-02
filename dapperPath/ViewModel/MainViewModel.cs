@@ -14,14 +14,23 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace dapperPath.ViewModel
 {
-    public class MainViewModel:ViewModelBase , INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
 
-        private Page _currentPage;
 
+        private INavigationService _navigationService;
+        public ICommand NavigateBoots { get; }
+        public ICommand NavigateToPageAddEdit { get; }
+        public ICommand NavigatePages { get; }
+        public ShoesViewModel bootsViewModel { get; }
+        public AddEditViewModel addViewModel { get; }
+
+        public CustomNavigate customNavigate = new CustomNavigate();
+        private Page _currentPage;
         public Page CurrentPage
         {
             get { return _currentPage; }
@@ -31,36 +40,43 @@ namespace dapperPath.ViewModel
                 OnPropertyChanged(nameof(CurrentPage));
             }
         }
-
-        public ICommand NavigateBoots { get; }
-        public ICommand NavigateToPageAddEdit {  get; }
-        public ShoesViewModel bootsViewModel { get; }
-        public AddEditViewModel addViewModel { get; }
-
-        public AddShoes add { get; set; }
-
+        private ICommand _navigateBackCommand;
+        public ICommand NavigateBackCommand
+        {
+            get
+            {
+                if (_navigateBackCommand == null)
+                {
+                    _navigateBackCommand = new RelayCommand(_navigationService.NavigateBack);
+                }
+                return _navigateBackCommand;
+            }
+        }
         public MainViewModel()
         {
+            _navigationService = new CustomNavigate();
+            _navigationService.PageChanged += OnPageChanged;
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
             NavigateToPageAddEdit = new RelayCommand(NavigateToAddEdit);
             bootsViewModel = new ShoesViewModel();
-            addViewModel = new AddEditViewModel();
-            add = new AddShoes(addViewModel);
-            CurrentPage = new ShoesPage(bootsViewModel);
-
-            //CurrentPage = new AddShoes(addViewModel);
+            addViewModel = new AddEditViewModel(_navigationService);
+            _navigationService.NavigateTo(new ShoesPage(bootsViewModel));
+        }
+        private void OnPageChanged(object sender, PageChangedEventArgs e)
+        {
+            CurrentPage = e.Page;
         }
 
         private void NavigateToBootsPage()
         {
-            CurrentPage = new ShoesPage(bootsViewModel);
+            _navigationService.NavigateTo(new ShoesPage(bootsViewModel));
         }
         private void NavigateToAddEdit()
         {
-            //CurrentPage = new AddShoes(addViewModel);
-            CurrentPage = add;
+            _navigationService.NavigateTo(new AddShoes(addViewModel));
+
         }
-        
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

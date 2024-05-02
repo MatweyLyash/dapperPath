@@ -41,7 +41,7 @@
                 <TextBox Grid.Column="1" Grid.Row="3"  Style = "{StaticResource Input}"/>
                 <TextBox Grid.Column="1" Grid.Row="4"  Style = "{StaticResource Input}"/>
                 <TextBox Grid.Column="1" Grid.Row="5"   Style = "{StaticResource Input}"/>
-                <Button HorizontalAlignment="Center" Grid.Row="6" Content="Назад" Margin="0,16,0,16" Width="72"/>
+                <Button HorizontalAlignment="Center" Grid.Row="6" Content="Назад" Margin="0,16,0,16" Width="72" Command="{Binding NavigateBackCommand}"/>
                 <Button HorizontalAlignment="Left" Grid.Row="6" Grid.Column="1" Content="Сохранить" Margin="170,16,0,16" Width="100"/>
 
             </Grid>
