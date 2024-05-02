@@ -154,17 +154,14 @@
                 <Button>
                     <Button.Content>Спецпредложение</Button.Content>
                 </Button>
-                <Button>
+                <Button Command="{Binding NavigateToPageAddEdit}">
                     <Button.Content>Добавить</Button.Content>
                 </Button>
 
             </StackPanel>
 
         </Border>
-        <Frame x:Name="MainContent" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}">
-            
-        </Frame>
- 
+        <Frame NavigationUIVisibility="Hidden" x:Name="MainContent" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}"></Frame>
 
     </Grid>
 </Window>

@@ -17,9 +17,8 @@ using System.Windows.Input;
 
 namespace dapperPath.ViewModel
 {
-    public class MainViewModel:ViewModelBase 
+    public class MainViewModel:ViewModelBase , INotifyPropertyChanged
     {
-        public ShoesViewModel bootsViewModel {  get; }
 
         private Page _currentPage;
 
@@ -34,19 +33,34 @@ namespace dapperPath.ViewModel
         }
 
         public ICommand NavigateBoots { get; }
-        public ICommand MainFilter { get; }
+        public ICommand NavigateToPageAddEdit {  get; }
+        public ShoesViewModel bootsViewModel { get; }
+        public AddEditViewModel addViewModel { get; }
+
+        public AddShoes add { get; set; }
+
         public MainViewModel()
         {
-            bootsViewModel = new ShoesViewModel();
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
-
+            NavigateToPageAddEdit = new RelayCommand(NavigateToAddEdit);
+            bootsViewModel = new ShoesViewModel();
+            addViewModel = new AddEditViewModel();
+            add = new AddShoes(addViewModel);
             CurrentPage = new ShoesPage(bootsViewModel);
+
+            //CurrentPage = new AddShoes(addViewModel);
         }
 
         private void NavigateToBootsPage()
         {
             CurrentPage = new ShoesPage(bootsViewModel);
         }
+        private void NavigateToAddEdit()
+        {
+            //CurrentPage = new AddShoes(addViewModel);
+            CurrentPage = add;
+        }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -90,9 +90,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\AddEditViewModel.cs" />
+    <Compile Include="View\AddShoes.xaml.cs">
+      <DependentUpon>AddShoes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CurrentShoesPage.xaml.cs">
+      <DependentUpon>CurrentShoesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ShoesPage.xaml.cs">
       <DependentUpon>ShoesPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resourses\addedit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddShoes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CurrentShoesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
