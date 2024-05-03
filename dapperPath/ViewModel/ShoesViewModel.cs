@@ -1,4 +1,5 @@
 ﻿using dapperPath.Model;
+using dapperPath.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -16,7 +17,16 @@ namespace dapperPath.ViewModel
     public class ShoesViewModel : ViewModelBase
     {
         private ObservableCollection<Shoes> _shoes;
-       
+        private Visibility _myVisibility = Visibility.Visible;
+        public Visibility MyVisibility
+        {
+            get { return _myVisibility; }
+            set
+            {
+                _myVisibility = value;
+                RaisePropertyChanged(nameof(MyVisibility));
+            }
+        }
 
         public ObservableCollection<Shoes> Shoes {
             get
@@ -33,17 +43,19 @@ namespace dapperPath.ViewModel
         public ICommand GetFemaleBoots { get; set; }
         public ICommand GetAll {  get; set; }
 
+        public ICommand ChangeShoe { get; set; }
+
+
         public ShoesViewModel()
         {
             Shoes = new ObservableCollection<Shoes>();
             currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
             _totalShoes = new ObservableCollection<Shoes>(currentStuff);
-            Shoes = _totalShoes;   
+            Shoes = _totalShoes;
 
             GetFemaleBoots = new RelayCommand(FilterByFemale);
             GetMaleBoots = new RelayCommand(FilterByMale);
             GetAll = new RelayCommand(ShowAll);
-
         }
         public void FilterByFemale()
         {
@@ -63,8 +75,11 @@ namespace dapperPath.ViewModel
         {
             Shoes = new ObservableCollection<Shoes>(currentStuff);
         }
-
-
-
+        public void VisibleChangedPage()
+        {
+            dapperpathEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(s => s.Reload());
+            currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
+            Shoes = new ObservableCollection<Shoes>(currentStuff);
+        }
     }
 }

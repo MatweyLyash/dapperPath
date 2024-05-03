@@ -26,6 +26,7 @@ namespace dapperPath.ViewModel
         public ICommand NavigateBoots { get; }
         public ICommand NavigateToPageAddEdit { get; }
         public ICommand NavigatePages { get; }
+       
         public ShoesViewModel bootsViewModel { get; }
         public AddEditViewModel addViewModel { get; }
 
@@ -61,6 +62,9 @@ namespace dapperPath.ViewModel
             bootsViewModel = new ShoesViewModel();
             addViewModel = new AddEditViewModel(_navigationService);
             _navigationService.NavigateTo(new ShoesPage(bootsViewModel));
+            
+            //VisibleChanged = new RelayCommand(VisibleChangedPage);
+
         }
         private void OnPageChanged(object sender, PageChangedEventArgs e)
         {
@@ -76,6 +80,11 @@ namespace dapperPath.ViewModel
             _navigationService.NavigateTo(new AddShoes(addViewModel));
 
         }
+        
+
+
+
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

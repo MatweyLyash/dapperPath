@@ -21,10 +21,12 @@ namespace dapperPath.View
     /// </summary>
     public partial class ShoesPage : Page
     {
+        ShoesViewModel model = new ShoesViewModel();
         public ShoesPage(ShoesViewModel bootsViewModel)
         {
             InitializeComponent();
             DataContext = bootsViewModel;
         }
+
     }
 }
