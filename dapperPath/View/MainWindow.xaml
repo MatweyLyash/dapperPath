@@ -67,7 +67,10 @@
                 </Viewbox>
                 <Viewbox Grid.Column="2" Width="Auto">
                     <Border CornerRadius="20" Background="#EFEFEF" Margin="20 0 0 0" VerticalAlignment="Center">
-                        <TextBox BorderBrush="Transparent" Style="{StaticResource main_SearchField}"  Name="TBoxSearch" VerticalAlignment="Center">
+                        <TextBox BorderBrush="Transparent" Style="{StaticResource main_SearchField}"  Name="TBoxSearch" 
+                                 VerticalAlignment="Center" 
+                                 Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                                 >
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type materialDesign:SmartHint}">
                                     <Setter Property="VerticalAlignment" Value="Center"/>

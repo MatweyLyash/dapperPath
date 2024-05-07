@@ -28,38 +28,6 @@ namespace dapperPath.View
         {
             InitializeComponent();
         }
-
-
-
-        //private void UpdateStuff()
-        //{
-        //    var currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
-        //    currentStuff = currentStuff.Where(p => p.Title.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
-        //    LViewStuff.ItemsSource = currentStuff.OrderBy(p => p.Title).ToList();
-        //}
-
-        //private void TBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    UpdateStuff();
-        //}
-        //private void SortWomen(object Sender, RoutedEventArgs e)
-        //{
-        //    var currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
-        //    currentStuff = currentStuff.Where(x => x.Sex == "W").ToList();
-        //    LViewStuff.ItemsSource = currentStuff.OrderBy(p => p.Title).ToList();
-        //}
-        //private void SortMan(object Sender, RoutedEventArgs e)
-        //{
-        //    var currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
-        //    currentStuff = currentStuff.Where(x => x.Sex == "M").ToList();
-        //    LViewStuff.ItemsSource = currentStuff.OrderBy(p => p.Title).ToList();
-        //}
-        //private void SortKids(object Sender, RoutedEventArgs e)
-        //{
-        //    var currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
-        //    currentStuff = currentStuff.Where(x => x.Sex == "K").ToList();
-        //    LViewStuff.ItemsSource = currentStuff.OrderBy(p => p.Title).ToList();
-        //}
     }
 
 }

@@ -4,52 +4,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace dapperPath.ViewModel
 {
-    public class CustomNavigate : INavigationService
+    public static class CustomNavigate
     {
-        private Stack<Page> _pageStack = new Stack<Page>();
+        private static Stack<Page> pageStack = new Stack<Page>();
 
-        public void NavigateTo(Page page)
+        public static void NavigateTo(Page page)
         {
-            _pageStack.Push(page);
-            OnPageChanged(page);
-        }
-
-        public void NavigateBack()
-        {
-            if (_pageStack.Count > 1)
+            // Добавляем текущую страницу на стек
+            if (pageStack.Count > 0)
             {
-                _pageStack.Pop();
-                OnPageChanged(_pageStack.Peek());
+                pageStack.Push(pageStack.Peek());
             }
+
+            // Переходим на новую страницу
+            pageStack.Push(page);
+
+            // Вызываем событие об изменении текущей страницы
+            OnCurrentPageChanged(page);
         }
 
-        public event EventHandler<PageChangedEventArgs> PageChanged;
-
-        protected virtual void OnPageChanged(Page page)
+        public static void GoBack()
         {
-            PageChanged?.Invoke(this, new PageChangedEventArgs(page));
+            // Убираем текущую страницу со стека
+            pageStack.Pop();
+
+            // Вызываем событие об изменении текущей страницы
+            OnCurrentPageChanged(pageStack.Peek());
+        }
+
+        public static Page GetCurrentPage()
+        {
+            return pageStack.Peek();
+        }
+
+        public static event EventHandler<PageChangedEventArgs> CurrentPageChanged;
+
+        private static void OnCurrentPageChanged(Page newPage)
+        {
+            CurrentPageChanged?.Invoke(null, new PageChangedEventArgs(newPage));
         }
     }
 
     public class PageChangedEventArgs : EventArgs
     {
-        public Page Page { get; }
+        public Page NewPage { get; }
 
-        public PageChangedEventArgs(Page page)
+        public PageChangedEventArgs(Page newPage)
         {
-            Page = page;
+            NewPage = newPage;
         }
-    }
-
-    public interface INavigationService
-    {
-        void NavigateTo(Page page);
-
-        void NavigateBack();
-        event EventHandler<PageChangedEventArgs> PageChanged;
     }
 }

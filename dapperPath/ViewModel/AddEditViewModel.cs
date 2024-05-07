@@ -3,28 +3,29 @@ using dapperPath.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Views;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
+
 
 namespace dapperPath.ViewModel
 {
+
     public class AddEditViewModel : ViewModelBase
     {
-        private INavigationService _navigationService;
         public ICommand NavigateBackCommand { get; }
         public ICommand SaveBootsCommand { get; }
-        public AddShoes addShoes {  get; }
-        private Shoes _currnetShoes = new Shoes();
-        public AddEditViewModel(Shoes shoes)
-        {
-            _currnetShoes = shoes;
-        }
+        private Shoes _currentShoes = new Shoes();
+
+
         private string _title;
         public string Title
         {
@@ -112,46 +113,76 @@ namespace dapperPath.ViewModel
                 RaisePropertyChanged(nameof(Category));
             }
         }
-
-
-        public AddEditViewModel(INavigationService navigationService)
+    
+        public AddEditViewModel( Shoes selectedItem)
         {
-            _navigationService = navigationService;
+            if (selectedItem != null)
+            {
+                _currentShoes = new Shoes
+                {
+                    ProductID = selectedItem.ProductID,
+                    Title = selectedItem.Title,
+                    Brand = selectedItem.Brand,
+                    AvailableSizes = selectedItem.AvailableSizes,
+                    Description = selectedItem.Description,
+                    Image = selectedItem.Image,
+                    Price = selectedItem.Price,
+                    Sex = selectedItem.Sex,
+                    Category = selectedItem.Category
+                };
+                Title = selectedItem.Title;
+                Brand = selectedItem.Brand;
+                AvaibilitySizes = selectedItem.AvailableSizes;
+                Description = selectedItem.Description;
+                Image = selectedItem.Image;
+                Price = (decimal)selectedItem.Price;
+                Sex = selectedItem.Sex;
+                Category = selectedItem.Category;
+            }
+            else
+            {
+                _currentShoes = new Shoes();
+            }
             SaveBootsCommand = new RelayCommand(SaveBoots);
-            NavigateBackCommand = new RelayCommand(_navigationService.NavigateBack);
+            NavigateBackCommand = new RelayCommand(Back);
         }
+        private void Back()
+        {
+            CustomNavigate.GoBack();
+        }
+ 
         public void SaveBoots()
         {
-            _currnetShoes.Title = Title;
-            _currnetShoes.Brand = Brand;
-            _currnetShoes.AvailableSizes = AvaibilitySizes;
-            _currnetShoes.Description = Description;
-            _currnetShoes.Image = Image;
-            _currnetShoes.Price = Price;
-            _currnetShoes.Sex = Sex;
-            _currnetShoes.Category = Category;
+            _currentShoes.Title = Title;
+            _currentShoes.Brand = Brand;
+            _currentShoes.AvailableSizes = AvaibilitySizes;
+            _currentShoes.Description = Description;
+            _currentShoes.Image = Image;
+            _currentShoes.Price = Price;
+            _currentShoes.Sex = Sex;
+            _currentShoes.Category = Category;
             StringBuilder error = new StringBuilder();
-            if (string.IsNullOrWhiteSpace(_currnetShoes.Title))
+            if (string.IsNullOrWhiteSpace(_currentShoes.Title))
             {
                 error.AppendLine("Укажите название пары");
             }
-            if (string.IsNullOrWhiteSpace(_currnetShoes.Brand))
+            if (string.IsNullOrWhiteSpace(_currentShoes.Brand))
             {
                 error.AppendLine("Укажите бренд пары");
             }
-            if (string.IsNullOrWhiteSpace(_currnetShoes.Description))
+            if (string.IsNullOrWhiteSpace(_currentShoes.Description))
             {
                 error.AppendLine("Укажите описание пары");
             }
-            if (string.IsNullOrWhiteSpace(_currnetShoes.Category))
+            if (string.IsNullOrWhiteSpace(_currentShoes.Category))
             {
                 error.AppendLine("Укажите категорию пары");
             }
-            if (string.IsNullOrWhiteSpace(_currnetShoes.Price.ToString()))
+            if (string.IsNullOrWhiteSpace(_currentShoes.Price.ToString()))
             {
                 error.AppendLine("Укажите цену пары");
             }
-            if (string.IsNullOrWhiteSpace(_currnetShoes.Sex))
+            if (string.IsNullOrWhiteSpace(_currentShoes.Sex))
             {
                 error.AppendLine("Укажите пол целевого покупателя");
             }
@@ -162,19 +193,32 @@ namespace dapperPath.ViewModel
                 return;
             }
             
-            if (_currnetShoes.ProductID == 0)
+            if (_currentShoes.ProductID == 0)
             {
-               dapperpathEntities.GetContext().Shoes.Add(_currnetShoes);
+               dapperpathEntities.GetContext().Shoes.Add(_currentShoes);
+            }
+            else
+            {
+               Shoes shoes = dapperpathEntities.GetContext().Shoes.Where(s => s.ProductID == _currentShoes.ProductID).FirstOrDefault();
+                    shoes.Title = Title;
+                    shoes.Brand = Brand;
+                    shoes.AvailableSizes = AvaibilitySizes;
+                    shoes.Description = Description;
+                    shoes.Image = Image;
+                    shoes.Price = Price;
+                    shoes.Sex = Sex;
+                    shoes.Category = Category;
             }
             try
             {
                 dapperpathEntities.GetContext().SaveChanges();
                 MessageBox.Show("Информация сохранена");
-                _navigationService.NavigateBack();
+                ShoesViewModel.Instance.RefreshShoes();
+                CustomNavigate.GoBack();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show(ex.Message);
             }
         }
 

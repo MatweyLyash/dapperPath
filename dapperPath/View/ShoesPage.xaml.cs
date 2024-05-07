@@ -1,4 +1,5 @@
-﻿using dapperPath.ViewModel;
+﻿using dapperPath.Model;
+using dapperPath.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,28 @@ namespace dapperPath.View
     /// </summary>
     public partial class ShoesPage : Page
     {
-        ShoesViewModel model = new ShoesViewModel();
+        private ShoesViewModel BootsViewModel;
         public ShoesPage(ShoesViewModel bootsViewModel)
         {
             InitializeComponent();
+            this.BootsViewModel = bootsViewModel;
             DataContext = bootsViewModel;
         }
+        private void LBoxStuff_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                BootsViewModel.selectedItem = e.AddedItems[0] as Shoes;
+            }
+        }
 
+        private void Page_isVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if(Visibility == Visibility.Visible)
+            {
+                dapperpathEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(entry => entry.Reload());
+                LBoxStuff.ItemsSource = dapperpathEntities.GetContext().Shoes.ToList();
+            }
+        }
     }
 }
