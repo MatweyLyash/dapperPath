@@ -4,9 +4,11 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,7 @@ namespace dapperPath.ViewModel
     {
         public ICommand NavigateBackCommand { get; }
         public ICommand SaveBootsCommand { get; }
+        public ICommand OpenDialog { get; }
         private Shoes _currentShoes = new Shoes();
 
 
@@ -143,6 +146,7 @@ namespace dapperPath.ViewModel
             {
                 _currentShoes = new Shoes();
             }
+            OpenDialog = new RelayCommand(OpenDialogFile);
             SaveBootsCommand = new RelayCommand(SaveBoots);
             NavigateBackCommand = new RelayCommand(Back);
         }
@@ -161,6 +165,7 @@ namespace dapperPath.ViewModel
             _currentShoes.Price = Price;
             _currentShoes.Sex = Sex;
             _currentShoes.Category = Category;
+
             StringBuilder error = new StringBuilder();
             if (string.IsNullOrWhiteSpace(_currentShoes.Title))
             {
@@ -208,17 +213,31 @@ namespace dapperPath.ViewModel
                     shoes.Price = Price;
                     shoes.Sex = Sex;
                     shoes.Category = Category;
+                
             }
             try
             {
                 dapperpathEntities.GetContext().SaveChanges();
                 MessageBox.Show("Информация сохранена");
-                ShoesViewModel.Instance.RefreshShoes();
                 CustomNavigate.GoBack();
+                ShoesViewModel.Instance.RefreshShoes();
+               
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+        private void OpenDialogFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png, *.jpg, *.jpeg, *.gif, *.webp) | *.png; *.jpg; *.jpeg; *.gif;*.webp";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                Image = openFileDialog.FileName;
             }
         }
 

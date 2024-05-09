@@ -51,17 +51,51 @@ namespace dapperPath.ViewModel
                 bootsViewModel.FilterShoes(value);
             }
         }
+
+        private ObservableCollection<string> _themes;
+        public ObservableCollection<string> Themes
+        {
+            get { return _themes; }
+            set { _themes = value; }
+        }
+
+        private string _selectedTheme;
+        public string SelectedTheme
+        {
+            get { return _selectedTheme; }
+            set
+            {
+                _selectedTheme = value;
+                OnPropertyChanged(nameof(SelectedTheme));
+                ChangeTheme(value);
+            }
+        }
+
+        private ResourceDictionary _currentTheme;
+        public ResourceDictionary CurrentTheme
+        {
+            get { return _currentTheme; }
+            set
+            {
+                _currentTheme = value;
+                OnPropertyChanged(nameof(CurrentTheme));
+            }
+        }
         public MainViewModel()
         {
-
+            _themes = new ObservableCollection<string>
+            {
+                "ru",
+                "en"
+            };
+            SelectedTheme = "ru";
+            
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
             NavigateToPageAddEdit = new RelayCommand(NavigateToAddEdit);
             CustomNavigate.CurrentPageChanged += OnCurrentPageChanged;
             bootsViewModel = new ShoesViewModel();
             addViewModel = new AddEditViewModel(null);            
             CustomNavigate.NavigateTo(new ShoesPage(bootsViewModel));
-            
-            //VisibleChanged = new RelayCommand(VisibleChangedPage);
 
         }
 
@@ -74,6 +108,26 @@ namespace dapperPath.ViewModel
         {
             CustomNavigate.NavigateTo(new AddShoes(addViewModel));
 
+        }
+
+        private void ChangeTheme(string themeName)
+        {
+            ResourceDictionary theme = null;
+
+            switch (themeName)
+            {
+                case "ru":
+                    
+                    break;
+                case "en":
+                    
+                    break;
+            }
+
+            if (theme != null)
+            {
+                CurrentTheme = theme;
+            }
         }
         private void OnCurrentPageChanged(object sender, PageChangedEventArgs e)
         {

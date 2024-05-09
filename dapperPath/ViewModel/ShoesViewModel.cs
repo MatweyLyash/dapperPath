@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,7 +18,7 @@ using System.Windows.Navigation;
 
 namespace dapperPath.ViewModel
 {
-    public class ShoesViewModel : ViewModelBase
+    public class ShoesViewModel : ViewModelBase , INotifyPropertyChanged
     {
         private static ShoesViewModel _instance;
         private static readonly object _lock = new object();
@@ -96,9 +97,8 @@ namespace dapperPath.ViewModel
             currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
             _totalShoes = new ObservableCollection<Shoes>(currentStuff);
             Shoes = _totalShoes;
-            //ChangeShoeCommand = new RelayCommand<Shoes>(ChangeShoe);
-            DeleteShoesCommand = new RelayCommand(DeleteShoes);
-            EditShoesCommand = new RelayCommand(EditShoes);
+            DeleteShoesCommand = new RelayCommand<Shoes>(DeleteShoes);
+            EditShoesCommand = new RelayCommand<Shoes>(EditShoes);
             GetFemaleBoots = new RelayCommand(() => filterMode = FilterMode.Female);
             GetMaleBoots = new RelayCommand(() => filterMode = FilterMode.Male);
             GetAll = new RelayCommand(() => filterMode = FilterMode.All);
@@ -114,12 +114,6 @@ namespace dapperPath.ViewModel
         }
         public void ShowAll()
         {
-            Shoes = new ObservableCollection<Shoes>(currentStuff);
-        }
-        public void VisibleChangedPage()
-        {
-            dapperpathEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(s => s.Reload());
-            currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
             Shoes = new ObservableCollection<Shoes>(currentStuff);
         }
         public void FilterShoes(string filterText)
@@ -161,32 +155,45 @@ namespace dapperPath.ViewModel
                     break;
             }
 
-            RaisePropertyChanged(nameof(Shoes));
+            OnPropertyChanged(nameof(Shoes));
         }
 
-        public void EditShoes()
+        public void EditShoes(Shoes shoe)
         {
-            CustomNavigate.NavigateTo(new AddShoes(new AddEditViewModel(selectedItem)));
+
+                CustomNavigate.NavigateTo(new AddShoes(new AddEditViewModel(shoe)));
+
+            
         }
         public void RefreshShoes()
         {
             currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
             Shoes = new ObservableCollection<Shoes>(currentStuff);
+            CustomNavigate.RefreshPeak(new ShoesPage(new ShoesViewModel()));
         }
-        private void DeleteShoes()
+        private void DeleteShoes(Shoes shoes)
         {
             try
             {
-                Shoes shoes = dapperpathEntities.GetContext().Shoes.Where(s => s.ProductID == selectedItem.ProductID).FirstOrDefault();
-                dapperpathEntities.GetContext().Shoes.Remove(shoes);
+                Shoes Shoes = dapperpathEntities.GetContext().Shoes.Where(s => s.ProductID ==shoes.ProductID).FirstOrDefault();
+                dapperpathEntities.GetContext().Shoes.Remove(Shoes);
                 dapperpathEntities.GetContext().SaveChanges();
                 MessageBox.Show("наверное удалено");
+                CustomNavigate.RefreshPeak(new ShoesPage(new ShoesViewModel()));
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
+
 }

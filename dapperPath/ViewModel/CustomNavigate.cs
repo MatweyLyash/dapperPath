@@ -36,6 +36,11 @@ namespace dapperPath.ViewModel
             // Вызываем событие об изменении текущей страницы
             OnCurrentPageChanged(pageStack.Peek());
         }
+        public static void RefreshPeak(Page page) 
+        {
+            pageStack.Pop();
+            NavigateTo(page);
+        }
 
         public static Page GetCurrentPage()
         {

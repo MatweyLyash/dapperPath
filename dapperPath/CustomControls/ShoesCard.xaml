@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="dapperPath.CustomControls.ShoesCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:dapperPath.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <Binding/>
+    </UserControl.DataContext>
+    
+    <Grid x:Name="card" Margin="18" Width="200" Height="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Viewbox Width="Auto">
+            <Image Width="200" Grid.Row="0" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="center">
+                <Image.Source>
+                    <Binding Path="Image">
+                        <Binding.TargetNullValue>
+                            <ImageSource>/Resourses/Gallery/notFound.jpg</ImageSource>
+                        </Binding.TargetNullValue>
+                    </Binding>
+                </Image.Source>
+            </Image>    
+        </Viewbox>
+        <TextBlock Text="{Binding Title}" Style="{StaticResource card_name_stuff}"/>
+        <TextBlock Text="{Binding Price, StringFormat={}{0:N2}BYN}" Style="{StaticResource card_cost_stuff}"/>
+        <Button Grid.Row="3" HorizontalAlignment="Left" Command="{Binding DataContext.DeleteShoesCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}, Mode=FindAncestor}}"  CommandParameter="{Binding}">
+            <Button.Content>Удалить</Button.Content>
+        </Button>
+        <Button Grid.Row="3" Background="Transparent" HorizontalAlignment="Right" Command="{Binding DataContext.EditShoesCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}, Mode=FindAncestor}}" CommandParameter="{Binding}">
+            <Button.Content>Изменить</Button.Content>
+        </Button>
+    </Grid>
+</UserControl>

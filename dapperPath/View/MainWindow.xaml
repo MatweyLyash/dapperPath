@@ -7,12 +7,15 @@
         xmlns:local="clr-namespace:dapperPath"
         xmlns:viewmodel ="clr-namespace:dapperPath.ViewModel"
         mc:Ignorable="d"
+        Cursor="{StaticResource customCursor}"
         Title="dapperPath" Height="1080" Width="1920" MinHeight="720" MinWidth="1080" WindowState="Maximized">
     
     <Window.DataContext>
         <viewmodel:MainViewModel/>
     </Window.DataContext>
-    
+    <Window.Icon>
+        <BitmapImage UriSource="/Resourses/Gallery/dP.ico" />
+    </Window.Icon>
     <Grid x:Name="Main" Background="#D9D9D9">
         <Grid.RowDefinitions>
             <RowDefinition Height="111*"/>
@@ -30,7 +33,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Border x:Name="Header" Background="White" Grid.ColumnSpan="6">
+        <Border x:Name="Header" Style="{DynamicResource Window}" Grid.ColumnSpan="6" >
             <Grid x:Name="HeaderElement">
                 <Grid.RowDefinitions>
                 </Grid.RowDefinitions>
@@ -53,8 +56,8 @@
                                 <Setter Property="BorderBrush" Value="Transparent"/>
                             </Style>
                         </StackPanel.Resources>
-                        <Button Command="{Binding bootsViewModel.GetFemaleBoots}">
-                            <Button.Content>Женщинам</Button.Content>
+                        <Button Command="{Binding bootsViewModel.GetFemaleBoots}" Content="{DynamicResource  Main_Women }">
+
                         </Button>
                         <Button Command="{Binding bootsViewModel.GetMaleBoots}" >
                             <Button.Content>Мужчинам</Button.Content>
@@ -119,7 +122,7 @@
                                         <Image Source="/Resourses/Gallery/new_user.png" Stretch="Uniform" />
                                     </Button.Content>
                                 </Button>
-
+                                    
                             </DockPanel>
 
                         </Viewbox>
@@ -157,14 +160,17 @@
                 <Button>
                     <Button.Content>Спецпредложение</Button.Content>
                 </Button>
-                <Button Command="{Binding NavigateToPageAddEdit}">
-                    <Button.Content>Добавить</Button.Content>
-                </Button>
+                <Button Command="{Binding NavigateToPageAddEdit}" Content=""/>
 
+
+                <Button x:Name="ru"  Click="rus"/>
+                <Button x:Name="en" Click="eng"/>
+                <Button x:Name="lightTheme" Click="ChangeLightTheme" Content="Light"/>
+                <Button x:Name="darlTheme" Click="ChangeDarkTheme" Content="Dark"/>
             </StackPanel>
 
         </Border>
-        <Frame NavigationUIVisibility="Hidden" x:Name="MainContent" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}"></Frame>
+        <Frame NavigationUIVisibility="Hidden" x:Name="MainContent" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}" Cursor=""></Frame>
 
     </Grid>
 </Window>

@@ -13,7 +13,16 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="/Resourses/addedit.xaml"/>
                 <ResourceDictionary Source="/Resourses/Style.xaml"/>
+                <ResourceDictionary Source="/Resourses/Theme/light.xaml"/>
+                <ResourceDictionary Source="/Resourses/Language/lang.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <Cursor x:Key="customCursor">Resourses/Cursor/normal.cur</Cursor>
+
+            <Style TargetType="FrameworkElement">
+                <Setter Property="Cursor" Value="{StaticResource customCursor}" />
+            </Style>
         </ResourceDictionary>
+       
     </Application.Resources>
+    
 </Application>
