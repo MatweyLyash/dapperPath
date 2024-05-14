@@ -12,8 +12,6 @@
           <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="ProductID" Type="int" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="DateAdded" Type="datetime" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -21,9 +19,6 @@
           </Key>
           <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
-          <Property Name="OrderDate" Type="date" />
-          <Property Name="OrderStatus" Type="varchar" MaxLength="255" />
-          <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" />
           <Property Name="ShippingAddress" Type="varchar" MaxLength="255" />
           <Property Name="ShippingMethod" Type="varchar" MaxLength="255" />
           <Property Name="PaymentMethod" Type="varchar" MaxLength="255" />
@@ -35,9 +30,14 @@
           <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="ProductID" Type="int" />
-          <Property Name="Rating" Type="int" />
           <Property Name="ReviewText" Type="text" />
-          <Property Name="ReviewDate" Type="date" />
+        </EntityType>
+        <EntityType Name="ShoeCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Shoes">
           <Key>
@@ -46,13 +46,12 @@
           <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Brand" Type="varchar" MaxLength="255" />
-          <Property Name="Category" Type="varchar" MaxLength="255" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
           <Property Name="AvailableSizes" Type="varchar" MaxLength="255" />
-          <Property Name="UnavailableSizes" Type="varchar" MaxLength="255" />
           <Property Name="Description" Type="text" />
           <Property Name="Image" Type="varchar" MaxLength="255" />
           <Property Name="Sex" Type="nvarchar" MaxLength="1" />
+          <Property Name="CategoryID" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -61,7 +60,6 @@
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="PasswordHash" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="RegistrationDate" Type="date" />
         </EntityType>
         <EntityType Name="Wishlist">
           <Key>
@@ -132,6 +130,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Shoes__CategoryI__5CD6CB2B">
+          <End Role="ShoeCategory" Type="Self.ShoeCategory" Multiplicity="0..1" />
+          <End Role="Shoes" Type="Self.Shoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoeCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Shoes">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Wishlist__Produc__5535A963">
           <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1" />
           <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
@@ -160,6 +170,7 @@
           <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoeCategory" EntityType="Self.ShoeCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shoes" EntityType="Self.Shoes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Wishlist" EntityType="Self.Wishlist" Schema="dbo" store:Type="Tables" />
@@ -183,6 +194,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
+          <AssociationSet Name="FK__Shoes__CategoryI__5CD6CB2B" Association="Self.FK__Shoes__CategoryI__5CD6CB2B">
+            <End Role="ShoeCategory" EntitySet="ShoeCategory" />
+            <End Role="Shoes" EntitySet="Shoes" />
+          </AssociationSet>
           <AssociationSet Name="FK__Wishlist__Produc__5535A963" Association="Self.FK__Wishlist__Produc__5535A963">
             <End Role="Shoes" EntitySet="Shoes" />
             <End Role="Wishlist" EntitySet="Wishlist" />
@@ -203,8 +218,6 @@
           <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="ProductID" Type="Int32" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Shoes" Relationship="Self.FK__Cart__ProductID__4AB81AF0" FromRole="Cart" ToRole="Shoes" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Cart__UserID__49C3F6B7" FromRole="Cart" ToRole="Users" />
         </EntityType>
@@ -214,9 +227,6 @@
           </Key>
           <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" />
-          <Property Name="OrderDate" Type="DateTime" Precision="0" />
-          <Property Name="OrderStatus" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="ShippingAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ShippingMethod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="PaymentMethod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
@@ -229,9 +239,7 @@
           <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" />
           <Property Name="ProductID" Type="Int32" />
-          <Property Name="Rating" Type="Int32" />
           <Property Name="ReviewText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ReviewDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Shoes" Relationship="Self.FK__Reviews__Product__5165187F" FromRole="Reviews" ToRole="Shoes" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Reviews__UserID__5070F446" FromRole="Reviews" ToRole="Users" />
         </EntityType>
@@ -242,16 +250,16 @@
           <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Brand" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Category" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="AvailableSizes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="UnavailableSizes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__ProductID__4AB81AF0" FromRole="Shoes" ToRole="Cart" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__Product__5165187F" FromRole="Shoes" ToRole="Reviews" />
           <NavigationProperty Name="Wishlist" Relationship="Self.FK__Wishlist__Produc__5535A963" FromRole="Shoes" ToRole="Wishlist" />
           <Property Name="Sex" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryID" Type="Int32" />
+          <NavigationProperty Name="ShoeCategory" Relationship="dapperpathModel.FK__Shoes__CategoryI__5CD6CB2B" FromRole="Shoes" ToRole="ShoeCategory" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -260,7 +268,6 @@
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RegistrationDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__UserID__49C3F6B7" FromRole="Users" ToRole="Cart" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UserID__4D94879B" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__UserID__5070F446" FromRole="Users" ToRole="Reviews" />
@@ -396,7 +403,32 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Wishlist" EntitySet="Wishlist" />
           </AssociationSet>
+          <EntitySet Name="ShoeCategory" EntityType="dapperpathModel.ShoeCategory" />
+          <AssociationSet Name="FK__Shoes__CategoryI__5CD6CB2B" Association="dapperpathModel.FK__Shoes__CategoryI__5CD6CB2B">
+            <End Role="ShoeCategory" EntitySet="ShoeCategory" />
+            <End Role="Shoes" EntitySet="Shoes" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ShoeCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Shoes" Relationship="dapperpathModel.FK__Shoes__CategoryI__5CD6CB2B" FromRole="ShoeCategory" ToRole="Shoes" />
+        </EntityType>
+        <Association Name="FK__Shoes__CategoryI__5CD6CB2B">
+          <End Type="dapperpathModel.ShoeCategory" Role="ShoeCategory" Multiplicity="0..1" />
+          <End Type="dapperpathModel.Shoes" Role="Shoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoeCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Shoes">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -409,9 +441,7 @@
                 <ScalarProperty Name="CartID" ColumnName="CartID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
@@ -419,9 +449,6 @@
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
                 <ScalarProperty Name="ShippingMethod" ColumnName="ShippingMethod" />
                 <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
@@ -434,23 +461,20 @@
                 <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="ReviewText" ColumnName="ReviewText" />
-                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Shoes">
             <EntityTypeMapping TypeName="dapperpathModel.Shoes">
               <MappingFragment StoreEntitySet="Shoes">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Sex" ColumnName="Sex" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Brand" ColumnName="Brand" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="AvailableSizes" ColumnName="AvailableSizes" />
-                <ScalarProperty Name="UnavailableSizes" ColumnName="UnavailableSizes" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
               </MappingFragment>
@@ -462,7 +486,6 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -473,6 +496,14 @@
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoeCategory">
+            <EntityTypeMapping TypeName="dapperpathModel.ShoeCategory">
+              <MappingFragment StoreEntitySet="ShoeCategory">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,7 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
-
+<!--main-->
     <v:String x:Key="Main_Women">Women</v:String>
-    
+    <v:String x:Key="Main_Man">Men</v:String>
+    <v:String x:Key="Main_All">All</v:String>
+    <v:String x:Key="Main_Sneakers">Sneakers</v:String>
+    <v:String x:Key="Main_Boots">Boots</v:String>
+    <v:String x:Key="Main_Sport">Sport</v:String>
+    <v:String x:Key="Main_Pumps">Pumps</v:String>
+    <v:String x:Key="Main_Accessories">Accessories</v:String>
+    <v:String x:Key="Main_Special">Special</v:String>
+    <v:String x:Key="Main_Add">Add</v:String>
+    <v:String x:Key="Main_Change">Change</v:String>
+    <v:String x:Key="Main_Delete">Delete</v:String>
+    <v:String x:Key="Main_Search">Search...</v:String>
+<!--AddAndEdit-->
+
 </ResourceDictionary>

@@ -1,15 +1,88 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <Style x:Key="Window" TargetType="Border">
         <Setter Property="Background" Value="Black"/>
     </Style>
-    <Style x:Key="Input" TargetType="TextBox">
+    <Style x:Key="Button" TargetType="Button">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Margin" Value="15,0,0,0"/>
+        <Setter Property="FontSize" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
+    <Style x:Key="MainContent" TargetType="Border">
         <Setter Property="Background" Value="Black"/>
+    </Style>
+    <Style x:Key="SelectedLangRu" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Height" Value="50"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding SelectedTheme}" Value="ru">
+                <Setter Property="Foreground" Value="Black" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedTheme}" Value="en">
+                <Setter Property="Foreground" Value="White" />
+            </DataTrigger>
+        </Style.Triggers>
+
+    </Style>
+    <Style x:Key="SelectedLangEn" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Height" Value="50"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding SelectedTheme}" Value="en">
+                <Setter Property="Foreground" Value="Black" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectedTheme}" Value="ru">
+                <Setter Property="Foreground" Value="White" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="card_name_stuff" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Width" Value="160"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Grid.Row" Value="1"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
-    <Style x:Key="Text" TargetType="TextBlock">
+    <Style x:Key="card_cost_stuff" TargetType="TextBlock">
+        <Setter Property="Grid.Row" Value="2"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
+    <Style x:Key="ButtonCard" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+        <Setter Property="Background" Value="Black"/>
+    </Style>
+
+    <Style x:Key="JustText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    <Style x:Key="Input" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#87898c"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+    <ControlTemplate TargetType="Button" x:Key="btnBack">
+        <Border CornerRadius="3" 
+         Background="#f44336"
+         Width="72">
+            <ContentPresenter TextElement.Foreground="White" 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+        </Border>
+    </ControlTemplate>
+
 
 </ResourceDictionary>

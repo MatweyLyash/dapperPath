@@ -161,6 +161,9 @@
     <Compile Include="CustomControls\ShoesCard.xaml.cs">
       <DependentUpon>ShoesCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ShoeCategory.cs">
+      <DependentUpon>BaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AddEditViewModel.cs" />
     <Compile Include="ViewModel\CustomNavigate.cs" />
     <Compile Include="View\AddShoes.xaml.cs">
@@ -305,6 +308,7 @@
       <DependentUpon>BaseModel.edmx</DependentUpon>
       <LastGenOutput>BaseModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resourses\Gallery\pngLogo.png" />
     <Resource Include="Resourses\Gallery\notFound.jpg" />
     <Resource Include="Resourses\Gallery\basked.png" />
     <Resource Include="Resourses\Gallery\like.png" />

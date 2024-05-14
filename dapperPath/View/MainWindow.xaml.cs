@@ -41,6 +41,7 @@ namespace dapperPath.View
         private void eng(object sender, RoutedEventArgs e)
         {
             App.Language = new CultureInfo("en");
+           
         }
         private void ChangeLightTheme(object sender, RoutedEventArgs e)
         {

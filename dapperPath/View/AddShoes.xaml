@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:dapperPath.View"
-       xmlns:viewmodel ="clr-namespace:dapperPath.ViewModel"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewmodel ="clr-namespace:dapperPath.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddShoes">
@@ -12,7 +13,7 @@
         <viewmodel:MainViewModel/>
     </Page.DataContext>-->
     <Grid>
-        <Border Background="#D9D9D9">
+        <Border Style="{DynamicResource MainContent}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="163*"/>
@@ -30,26 +31,26 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Название" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"></TextBlock>
-                <TextBlock Text="Бренд"  Grid.RowSpan="3" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"/>
-                <TextBlock Text="Размеры" Grid.Row="2"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Text="Описание" Grid.Row="3" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Text="Изображение" Grid.Row="4"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Text="Цена" Grid.Row="5"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Text="Пол" Grid.Row="6"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Text="Категория" Grid.Row="7" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="Название" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Бренд"  Grid.RowSpan="3" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Размеры" Grid.Row="2"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Описание" Grid.Row="3" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Изображение" Grid.Row="4"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Цена" Grid.Row="5"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Пол" Grid.Row="6"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Категория" Grid.Row="7" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
                 
-                <TextBox Text="{Binding Title}" Grid.Column="1" Style = "{StaticResource Input}"/>
-                <TextBox Text="{Binding Brand}" Grid.Column="1"  Grid.Row="1"  Style = "{StaticResource Input}" />
-                <TextBox Text="{Binding AvaibilitySizes}" Grid.Column="1" Grid.Row="2"    Style = "{StaticResource Input}"/>
-                <TextBox Text="{Binding Description}"  Grid.Column="1" Grid.Row="3"  Style = "{StaticResource Input}"/>
+                <TextBox Text="{Binding Title}" Grid.Column="1" Style = "{DynamicResource Input}" MaxLength="32"/>
+                <TextBox Text="{Binding Brand}" Grid.Column="1"  Grid.Row="1"  Style = "{DynamicResource Input}" MaxLength="15" />
+                <TextBox Text="{Binding AvaibilitySizes}" Grid.Column="1" Grid.Row="2"    Style = "{DynamicResource Input}"/>
+                <TextBox Text="{Binding Description}"  Grid.Column="1" Grid.Row="3"  Style = "{DynamicResource Input}"/>
                 <Image Source="{Binding Image}" Grid.Column="1" Grid.Row="4"/>
-                <TextBox Text="{Binding Price}" Grid.Column="1" Grid.Row="5"   Style = "{StaticResource Input}"/>
-                <TextBox Text="{Binding Sex}" Grid.Column="1" Grid.Row="6"   Style = "{StaticResource Input}"/>
-                <TextBox Text="{Binding Category}" Grid.Column="1"  Grid.Row="7"   Style = "{StaticResource Input}"/>
-                <Button HorizontalAlignment="Center" Grid.Row="8" Content="Назад" Margin="0,16,0,16" Width="72" Command="{Binding NavigateBackCommand}"/>
-                <Button HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Content="Сохранить" Margin="170,16,0,16" Width="100" Command="{Binding SaveBootsCommand}"/>
-                <Button HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Content="Выбрать изображение" Command="{Binding OpenDialog}"/>
+                <TextBox Text="{Binding Price}" Grid.Column="1" Grid.Row="5"   Style = "{DynamicResource Input}"/>
+                <TextBox Text="{Binding Sex}" Grid.Column="1" Grid.Row="6"   Style = "{DynamicResource Input}"/>
+                <ComboBox ItemsSource="{Binding CategoryCollection}" SelectedItem="{Binding Category}" Grid.Column="1" Grid.Row="7" x:Name="comboCategorHy" materialDesign:HintAssist.Hint="{Binding Category}"/>
+                <Button HorizontalAlignment="Center" Grid.Row="8" Content="Назад"  Command="{Binding NavigateBackCommand}" Template="{DynamicResource btnBack}" />
+                <Button HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Content="Сохранить"  Command="{Binding SaveBootsCommand}" Style="{DynamicResource saveReact}" />
+                <Button HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Content="Выбрать изображение" Command="{Binding OpenDialog}" />
             </Grid>
         </Border>
     </Grid>

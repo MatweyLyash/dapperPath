@@ -25,13 +25,12 @@ namespace dapperPath.Model
         public int ProductID { get; set; }
         public string Title { get; set; }
         public string Brand { get; set; }
-        public string Category { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string AvailableSizes { get; set; }
-        public string UnavailableSizes { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
         public string Sex { get; set; }
+        public Nullable<int> CategoryID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Cart { get; set; }
@@ -39,5 +38,6 @@ namespace dapperPath.Model
         public virtual ICollection<Reviews> Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Wishlist> Wishlist { get; set; }
+        public virtual ShoeCategory ShoeCategory { get; set; }
     }
 }

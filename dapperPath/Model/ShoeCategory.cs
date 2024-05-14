@@ -12,14 +12,18 @@ namespace dapperPath.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Reviews
+    public partial class ShoeCategory
     {
-        public int ReviewID { get; set; }
-        public Nullable<int> UserID { get; set; }
-        public Nullable<int> ProductID { get; set; }
-        public string ReviewText { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ShoeCategory()
+        {
+            this.Shoes = new HashSet<Shoes>();
+        }
     
-        public virtual Shoes Shoes { get; set; }
-        public virtual Users Users { get; set; }
+        public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shoes> Shoes { get; set; }
     }
 }

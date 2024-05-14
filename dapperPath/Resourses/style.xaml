@@ -3,7 +3,7 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <Style x:Key="main_SearchField" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
-        <Setter Property="materialDesign:HintAssist.Hint" Value="Поиск..."/>
+        <Setter Property="materialDesign:HintAssist.Hint" Value="{DynamicResource Main_Search}"/>
         <Setter  Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Width" Value="340"/>
@@ -12,22 +12,23 @@
         <Setter Property="Padding" Value=" 10 0 0 0"/>
         <Setter Property="MaxLength" Value="40"/>
     </Style>
-    
-    <Style x:Key="card_name_stuff" TargetType="TextBlock">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="TextAlignment" Value="Center"/>
-        <Setter Property="TextWrapping" Value="Wrap"/>
-        <Setter Property="Width" Value="160"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Grid.Row" Value="1"/>
+    <Style x:Key="saveReact" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+        <Setter Property="Width" Value="110"/>
+        <Setter Property="Margin" Value="170,16,0,16"/>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="Black" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
     </Style>
 
-    <Style x:Key="card_cost_stuff" TargetType="TextBlock">
-        <Setter Property="Grid.Row" Value="2"/>
-        
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="TextWrapping" Value="Wrap"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="20"/>
-    </Style>
+
+
+
 </ResourceDictionary>

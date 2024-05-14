@@ -56,6 +56,11 @@ namespace dapperPath.ViewModel
         private List<Shoes> currentStuff;
         public ICommand GetMaleBoots { get; set; }
         public ICommand GetFemaleBoots { get; set; }
+        public ICommand GetSneakers { get; set; }
+        public ICommand GetBoots { get; set; }
+        public ICommand GetPumps { get; set; }
+        public ICommand GetAccessories { get; set; }
+        public ICommand GetSport { get; set; }
         public ICommand EditShoesCommand { get; set; }
         public ICommand DeleteShoesCommand { get; set; }
         public ICommand GetAll { get; set; }
@@ -99,6 +104,13 @@ namespace dapperPath.ViewModel
             Shoes = _totalShoes;
             DeleteShoesCommand = new RelayCommand<Shoes>(DeleteShoes);
             EditShoesCommand = new RelayCommand<Shoes>(EditShoes);
+
+            GetSneakers = new RelayCommand(FilterBySneakers);
+            GetBoots = new RelayCommand(FilterByBoots);
+            GetPumps = new RelayCommand(FilterByPumps);
+            GetAccessories = new RelayCommand(FilterByAccessories);
+            GetSport = new RelayCommand(FilterBySport);
+
             GetFemaleBoots = new RelayCommand(() => filterMode = FilterMode.Female);
             GetMaleBoots = new RelayCommand(() => filterMode = FilterMode.Male);
             GetAll = new RelayCommand(() => filterMode = FilterMode.All);
@@ -115,6 +127,33 @@ namespace dapperPath.ViewModel
         public void ShowAll()
         {
             Shoes = new ObservableCollection<Shoes>(currentStuff);
+        }
+        public void FilterBySneakers()
+        {
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 1));
+            OnPropertyChanged(nameof(Shoes));
+        }
+        public void FilterByBoots()
+        {
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 2));
+            OnPropertyChanged(nameof(Shoes));
+        }
+        public void FilterBySport()
+        {
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 3));
+            OnPropertyChanged(nameof(Shoes));
+
+        }
+        public void FilterByAccessories()
+        {
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 4));
+            OnPropertyChanged(nameof(Shoes));
+
+        }
+        public void FilterByPumps()
+        {
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 5));
+            OnPropertyChanged(nameof(Shoes));
         }
         public void FilterShoes(string filterText)
         {
@@ -160,10 +199,7 @@ namespace dapperPath.ViewModel
 
         public void EditShoes(Shoes shoe)
         {
-
                 CustomNavigate.NavigateTo(new AddShoes(new AddEditViewModel(shoe)));
-
-            
         }
         public void RefreshShoes()
         {

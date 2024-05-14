@@ -16,6 +16,10 @@
     <Window.Icon>
         <BitmapImage UriSource="/Resourses/Gallery/dP.ico" />
     </Window.Icon>
+    <Window.InputBindings>
+        <KeyBinding Gesture="CTRL+Z" Command="{Binding Back}" />
+        <KeyBinding Gesture="CTRL+Y" Command="{Binding Next}" />
+    </Window.InputBindings>
     <Grid x:Name="Main" Background="#D9D9D9">
         <Grid.RowDefinitions>
             <RowDefinition Height="111*"/>
@@ -44,32 +48,18 @@
                     <ColumnDefinition Width="240*"/>
                 </Grid.ColumnDefinitions>
                 <Viewbox Grid.Column="0" Width="Auto" >
-                    <Image Source="/Resourses/Gallery/logo.png" Height="15" Width="50" Stretch="Uniform"/>
+                    <Image Source="/Resourses/Gallery/pngLogo.png" Height="15" Width="50" Stretch="Uniform"/>
                 </Viewbox>
                 <Viewbox Grid.Column="1" Width="Auto">
-                    <StackPanel x:Name="menuItems" VerticalAlignment="Center" Orientation="Horizontal" >
-                        <StackPanel.Resources>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Margin" Value="15,0,0,0"/>
-                                <Setter Property="FontSize" Value="8"/>
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="BorderBrush" Value="Transparent"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <Button Command="{Binding bootsViewModel.GetFemaleBoots}" Content="{DynamicResource  Main_Women }">
+                    <StackPanel x:Name="menuItems" VerticalAlignment="Center" Orientation="Horizontal" Cursor="" >
 
-                        </Button>
-                        <Button Command="{Binding bootsViewModel.GetMaleBoots}" >
-                            <Button.Content>Мужчинам</Button.Content>
-                        </Button>
-                        <Button Command="{Binding bootsViewModel.GetAll}" >
-                            <Button.Content>Все</Button.Content>
-                        </Button>
-
+                        <Button Command="{Binding bootsViewModel.GetFemaleBoots}" Content="{DynamicResource  Main_Women }" Style="{DynamicResource Button}" />
+                        <Button Command="{Binding bootsViewModel.GetMaleBoots}" Content="{DynamicResource Main_Man}" Style="{DynamicResource Button}"/>
+                        <Button Command="{Binding bootsViewModel.GetAll}" Content="{DynamicResource Main_All}" Style="{DynamicResource Button}"/>
                     </StackPanel>
                 </Viewbox>
                 <Viewbox Grid.Column="2" Width="Auto">
-                    <Border CornerRadius="20" Background="#EFEFEF" Margin="20 0 0 0" VerticalAlignment="Center">
+                    <Border CornerRadius="20" Background="#EFEFEF" Margin="20 0 0 0" VerticalAlignment="Center" Style="{DynamicResource Window}">
                         <TextBox BorderBrush="Transparent" Style="{StaticResource main_SearchField}"  Name="TBoxSearch" 
                                  VerticalAlignment="Center" 
                                  Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
@@ -122,52 +112,37 @@
                                         <Image Source="/Resourses/Gallery/new_user.png" Stretch="Uniform" />
                                     </Button.Content>
                                 </Button>
-                                    
+
                             </DockPanel>
 
                         </Viewbox>
                     </Grid>
-
                 </Viewbox>
-
             </Grid>
         </Border >
-        <Border x:Name="Filter_menu" Background="White" Grid.Row="1" Grid.RowSpan="3">
+        <Border x:Name="Filter_menu"  Grid.Row="1" Grid.RowSpan="3" Style="{DynamicResource Window}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="filter">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}" >
+                            <Setter Property="Margin" Value="5"/>
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="Height" Value="50"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Content="{DynamicResource Main_Sneakers}" Command="{Binding bootsViewModel.GetSneakers}"/>
+                    <Button Content="{DynamicResource Main_Boots}"  Command="{Binding bootsViewModel.GetBoots}"/>
+                    <Button Content="{DynamicResource Main_Pumps}"  Command="{Binding bootsViewModel.GetPumps}"/>
+                    <Button Content="{DynamicResource Main_Sport}"  Command="{Binding bootsViewModel.GetSport}"/>
+                    <Button Content="{DynamicResource Main_Accessories}"  Command="{Binding bootsViewModel.GetAccessories}"/>
+                    <Button Command="{Binding NavigateToPageAddEdit}" Content="{DynamicResource Main_Add}"/>
 
-            <StackPanel x:Name="filter">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}" >
-                        <Setter Property="Margin" Value="10"/>
-                        <Setter Property="FontSize" Value="20"/>
-                        <Setter Property="Height" Value="50"/>
-                    </Style>
-                </StackPanel.Resources>
-                <Button>
-                    <Button.Content>Кроссовки</Button.Content>
-                </Button>
-                <Button>
-                    <Button.Content>Ботинки</Button.Content>
-                </Button>
-                <Button>
-                    <Button.Content>Туфли</Button.Content>
-                </Button>
-                <Button>
-                    <Button.Content>Спортивная</Button.Content>
-                </Button>
-                <Button>
-                    <Button.Content>Аксессуары</Button.Content>
-                </Button>
-                <Button>
-                    <Button.Content>Спецпредложение</Button.Content>
-                </Button>
-                <Button Command="{Binding NavigateToPageAddEdit}" Content=""/>
-
-
-                <Button x:Name="ru"  Click="rus"/>
-                <Button x:Name="en" Click="eng"/>
-                <Button x:Name="lightTheme" Click="ChangeLightTheme" Content="Light"/>
-                <Button x:Name="darlTheme" Click="ChangeDarkTheme" Content="Dark"/>
-            </StackPanel>
+                    <Button x:Name="ru"  Click="rus" Content="Ru" Style="{DynamicResource SelectedLangRu}" Command="{Binding SetRuCommand}"/>
+                    <Button x:Name="en" Click="eng" Content="Eng" Style="{DynamicResource SelectedLangEn}" Command="{Binding SetEngCommand}"/>
+                    <Button x:Name="lightTheme" Click="ChangeLightTheme" Content="Light"/>
+                    <Button x:Name="darlTheme" Click="ChangeDarkTheme" Content="Dark"/>
+                </StackPanel>
+            </ScrollViewer>
 
         </Border>
         <Frame NavigationUIVisibility="Hidden" x:Name="MainContent" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}" Cursor=""></Frame>

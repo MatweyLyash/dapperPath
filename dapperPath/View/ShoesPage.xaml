@@ -14,7 +14,7 @@
     
 
 
-    <Border  Background="#D9D9D9">
+    <Border  Style="{DynamicResource MainContent}">
         <ListBox Name="LBoxStuff" ItemsSource="{Binding Shoes}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>

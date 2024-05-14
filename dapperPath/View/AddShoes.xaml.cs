@@ -1,4 +1,5 @@
-﻿using dapperPath.ViewModel;
+﻿using dapperPath.Model;
+using dapperPath.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace dapperPath.View
         public AddShoes( AddEditViewModel addEditViewModel)
         {
             InitializeComponent();
-            DataContext = addEditViewModel;
+            DataContext = addEditViewModel;            
         }
     }
 }

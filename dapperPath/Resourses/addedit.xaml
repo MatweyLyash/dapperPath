@@ -9,7 +9,6 @@
         <Setter Property="Width" Value="340"/>
         <Setter Property="Height" Value="50"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        
         <Setter Property="MaxLength" Value="100"/>
     </Style>
     

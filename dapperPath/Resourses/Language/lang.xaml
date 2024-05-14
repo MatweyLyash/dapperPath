@@ -1,6 +1,22 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
-
+<!--main-->
     <v:String x:Key="Main_Women">Женщинам</v:String>
+    <v:String x:Key="Main_Man">Мужщинам</v:String>
+    <v:String x:Key="Main_All">Все</v:String>
+    <v:String x:Key="Main_Sneakers">Кроссовки</v:String>
+    <v:String x:Key="Main_Boots">Ботинки</v:String>
+    <v:String x:Key="Main_Sport">Спортивная</v:String>
+    <v:String x:Key="Main_Pumps">Туфли</v:String>
+    <v:String x:Key="Main_Accessories">Аксессуары</v:String>
+    <v:String x:Key="Main_Special">Спецпредложения</v:String>
+    <v:String x:Key="Main_Add">Добавить</v:String>
+    <v:String x:Key="Main_Change">Изменить</v:String>
+    <v:String x:Key="Main_Delete">Удалить</v:String>
+    <v:String x:Key="Main_Search">Поиск...</v:String>
+ <!--AddAndEdit-->
+    
+    
+    
 </ResourceDictionary>

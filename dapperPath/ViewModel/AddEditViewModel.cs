@@ -27,7 +27,16 @@ namespace dapperPath.ViewModel
         public ICommand SaveBootsCommand { get; }
         public ICommand OpenDialog { get; }
         private Shoes _currentShoes = new Shoes();
-
+        private List<String> _categoryCollection;
+        public List<String> CategoryCollection
+        {
+            get { return _categoryCollection; }
+            set
+            {
+                _categoryCollection = value;
+                RaisePropertyChanged(nameof(CategoryCollection));
+            }
+        }
 
         private string _title;
         public string Title
@@ -106,6 +115,17 @@ namespace dapperPath.ViewModel
             }
         }
 
+        public int CategoryID
+        {
+            get {
+                Dictionary<string, int> categoriesDict = new Dictionary<string, int>()
+                {
+                    {"Кроссовки",1 },{ "Ботинки",2},{ "Туфли",5},{ "Спортивная",3},{ "Аксессуары",4}
+                };
+                return categoriesDict[Category];
+            }
+            
+        }
         private string _category;
         public string Category
         {
@@ -116,9 +136,11 @@ namespace dapperPath.ViewModel
                 RaisePropertyChanged(nameof(Category));
             }
         }
-    
+
         public AddEditViewModel( Shoes selectedItem)
         {
+            _categoryCollection = dapperpathEntities.GetContext().ShoeCategory.Select(c => c.CategoryName).ToList();
+
             if (selectedItem != null)
             {
                 _currentShoes = new Shoes
@@ -131,7 +153,7 @@ namespace dapperPath.ViewModel
                     Image = selectedItem.Image,
                     Price = selectedItem.Price,
                     Sex = selectedItem.Sex,
-                    Category = selectedItem.Category
+                    CategoryID = selectedItem.CategoryID
                 };
                 Title = selectedItem.Title;
                 Brand = selectedItem.Brand;
@@ -140,7 +162,8 @@ namespace dapperPath.ViewModel
                 Image = selectedItem.Image;
                 Price = (decimal)selectedItem.Price;
                 Sex = selectedItem.Sex;
-                Category = selectedItem.Category;
+                Category = selectedItem.ShoeCategory.CategoryName;
+
             }
             else
             {
@@ -164,7 +187,7 @@ namespace dapperPath.ViewModel
             _currentShoes.Image = Image;
             _currentShoes.Price = Price;
             _currentShoes.Sex = Sex;
-            _currentShoes.Category = Category;
+            _currentShoes.CategoryID = CategoryID;
 
             StringBuilder error = new StringBuilder();
             if (string.IsNullOrWhiteSpace(_currentShoes.Title))
@@ -179,7 +202,7 @@ namespace dapperPath.ViewModel
             {
                 error.AppendLine("Укажите описание пары");
             }
-            if (string.IsNullOrWhiteSpace(_currentShoes.Category))
+            if (_currentShoes.CategoryID==null)
             {
                 error.AppendLine("Укажите категорию пары");
             }
@@ -187,9 +210,9 @@ namespace dapperPath.ViewModel
             {
                 error.AppendLine("Укажите цену пары");
             }
-            if (string.IsNullOrWhiteSpace(_currentShoes.Sex))
+            if (_currentShoes.Sex!="W"&&_currentShoes.Sex!="M")
             {
-                error.AppendLine("Укажите пол целевого покупателя");
+                error.AppendLine("Укажите пол целевого покупателя\n W или M");
             }
 
             if(error.Length > 0)
@@ -212,7 +235,7 @@ namespace dapperPath.ViewModel
                     shoes.Image = Image;
                     shoes.Price = Price;
                     shoes.Sex = Sex;
-                    shoes.Category = Category;
+                    shoes.CategoryID = CategoryID;
                 
             }
             try

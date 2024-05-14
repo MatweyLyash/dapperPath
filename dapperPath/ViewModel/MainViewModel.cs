@@ -24,6 +24,10 @@ namespace dapperPath.ViewModel
         public ICommand NavigateToPageAddEdit { get; }
         public ICommand NavigatePages { get; }
         public ICommand NavigateToEdit {  get; }
+        public ICommand Back { get; }
+        public ICommand Next { get; }
+        public ICommand SetRuCommand { get; }
+        public ICommand SetEngCommand { get; }
 
       
         public ShoesViewModel bootsViewModel { get; }
@@ -51,7 +55,6 @@ namespace dapperPath.ViewModel
                 bootsViewModel.FilterShoes(value);
             }
         }
-
         private ObservableCollection<string> _themes;
         public ObservableCollection<string> Themes
         {
@@ -92,9 +95,14 @@ namespace dapperPath.ViewModel
             
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
             NavigateToPageAddEdit = new RelayCommand(NavigateToAddEdit);
+            Back = new RelayCommand(GoBack);
+            Next = new RelayCommand(GoNext);
+            SetRuCommand = new RelayCommand(setRu);
+            SetEngCommand = new RelayCommand(setEng);
             CustomNavigate.CurrentPageChanged += OnCurrentPageChanged;
             bootsViewModel = new ShoesViewModel();
-            addViewModel = new AddEditViewModel(null);            
+            addViewModel = new AddEditViewModel(null);
+          
             CustomNavigate.NavigateTo(new ShoesPage(bootsViewModel));
 
         }
@@ -109,6 +117,15 @@ namespace dapperPath.ViewModel
             CustomNavigate.NavigateTo(new AddShoes(addViewModel));
 
         }
+        private void GoBack()
+        {
+            CustomNavigate.GoBack();
+        }
+        private void GoNext()
+        {
+            CustomNavigate.GoForward();
+            
+        }
 
         private void ChangeTheme(string themeName)
         {
@@ -117,10 +134,8 @@ namespace dapperPath.ViewModel
             switch (themeName)
             {
                 case "ru":
-                    
                     break;
                 case "en":
-                    
                     break;
             }
 
@@ -128,6 +143,14 @@ namespace dapperPath.ViewModel
             {
                 CurrentTheme = theme;
             }
+        }
+        private void setRu()
+        {
+            SelectedTheme = "ru";
+        }
+        private void setEng()
+        {
+            SelectedTheme = "en";
         }
         private void OnCurrentPageChanged(object sender, PageChangedEventArgs e)
         {

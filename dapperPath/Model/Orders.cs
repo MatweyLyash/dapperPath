@@ -16,9 +16,6 @@ namespace dapperPath.Model
     {
         public int OrderID { get; set; }
         public Nullable<int> UserID { get; set; }
-        public Nullable<System.DateTime> OrderDate { get; set; }
-        public string OrderStatus { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
         public string ShippingAddress { get; set; }
         public string ShippingMethod { get; set; }
         public string PaymentMethod { get; set; }

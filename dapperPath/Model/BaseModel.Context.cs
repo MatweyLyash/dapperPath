@@ -20,7 +20,7 @@ namespace dapperPath.Model
         {
             if (_context == null)
             {
-               _context = new dapperpathEntities();
+                _context = new dapperpathEntities();
             }
             return _context;
         }
@@ -40,5 +40,6 @@ namespace dapperPath.Model
         public virtual DbSet<Shoes> Shoes { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Wishlist> Wishlist { get; set; }
+        public virtual DbSet<ShoeCategory> ShoeCategory { get; set; }
     }
 }

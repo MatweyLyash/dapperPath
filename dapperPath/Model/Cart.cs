@@ -17,8 +17,6 @@ namespace dapperPath.Model
         public int CartID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> ProductID { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<System.DateTime> DateAdded { get; set; }
     
         public virtual Shoes Shoes { get; set; }
         public virtual Users Users { get; set; }

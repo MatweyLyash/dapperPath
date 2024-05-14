@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fec4789d4d724c758fa1c50274cdedc4" Name="Diagram1" ZoomLevel="60">
+      <Diagram DiagramId="fec4789d4d724c758fa1c50274cdedc4" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="dapperpathModel.Cart" Width="1.5" PointX="7.5" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="dapperpathModel.Orders" Width="1.5" PointX="13" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dapperpathModel.Reviews" Width="1.5" PointX="16.125" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="dapperpathModel.Reviews" Width="1.5" PointX="14.25" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="dapperpathModel.Shoes" Width="1.5" PointX="10.25" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="dapperpathModel.Users" Width="1.5" PointX="10.25" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="dapperpathModel.Wishlist" Width="1.5" PointX="12.5" PointY="3.375" IsExpanded="true" />
@@ -18,6 +18,8 @@
         <AssociationConnector Association="dapperpathModel.FK__Reviews__UserID__5070F446" ManuallyRouted="false" />
         <AssociationConnector Association="dapperpathModel.FK__Wishlist__Produc__5535A963" ManuallyRouted="false" />
         <AssociationConnector Association="dapperpathModel.FK__Wishlist__UserID__5441852A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="dapperpathModel.ShoeCategory" Width="1.5" PointX="8" PointY="3" />
+        <AssociationConnector Association="dapperpathModel.FK__Shoes__CategoryI__5CD6CB2B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
