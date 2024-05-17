@@ -63,6 +63,7 @@ namespace dapperPath.ViewModel
         public ICommand GetSport { get; set; }
         public ICommand EditShoesCommand { get; set; }
         public ICommand DeleteShoesCommand { get; set; }
+        public ICommand CurrentShoeCommand { get; set; }
         public ICommand GetAll { get; set; }
         private Shoes _selectedItem;
         public Shoes selectedItem
@@ -104,6 +105,7 @@ namespace dapperPath.ViewModel
             Shoes = _totalShoes;
             DeleteShoesCommand = new RelayCommand<Shoes>(DeleteShoes);
             EditShoesCommand = new RelayCommand<Shoes>(EditShoes);
+            CurrentShoeCommand = new RelayCommand<Shoes>(ShowCurrentShoe);
 
             GetSneakers = new RelayCommand(FilterBySneakers);
             GetBoots = new RelayCommand(FilterByBoots);
@@ -222,6 +224,10 @@ namespace dapperPath.ViewModel
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private void ShowCurrentShoe(Shoes shoes)
+        {
+            CustomNavigate.NavigateTo(new CurrentShoe(new CurrentShoesViewModel(shoes)));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

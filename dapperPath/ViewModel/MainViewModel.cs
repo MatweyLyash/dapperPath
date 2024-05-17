@@ -28,12 +28,16 @@ namespace dapperPath.ViewModel
         public ICommand Next { get; }
         public ICommand SetRuCommand { get; }
         public ICommand SetEngCommand { get; }
-
-      
+        public ICommand OpenRegistration { get; } 
+        public ICommand OpenAutorization { get; }
+        public Users Admin { get; set; }
         public ShoesViewModel bootsViewModel { get; }
         public AddEditViewModel addViewModel { get; }
         public ShoesViewModel editViewModel { get;}
-
+        public CurrentShoesViewModel currentShoesViewModel { get; }
+        public RegistrationViewModel registrationViewModel { get; }
+        public AutorizationViewModel autorizationViewModel { get; }
+        
         private Page _currentPage;
         public Page CurrentPage
         {
@@ -42,6 +46,16 @@ namespace dapperPath.ViewModel
             {
                 _currentPage = value;
                 OnPropertyChanged(nameof(CurrentPage));
+            }
+        }
+        private Page _currentShoe;
+        public Page CurrentShoe
+        {
+            get { return _currentShoe; }
+            set
+            {
+                _currentShoe = value;
+                OnPropertyChanged(nameof(CurrentShoe));
             }
         }
         private string _filterText;
@@ -84,7 +98,17 @@ namespace dapperPath.ViewModel
                 OnPropertyChanged(nameof(CurrentTheme));
             }
         }
-        public MainViewModel()
+        private string _helloUser;
+        public string HelloUser
+        {
+            get { return _helloUser; }
+            set
+            {
+                _helloUser = value;
+                OnPropertyChanged(nameof(HelloUser));
+            }
+        }
+        public MainViewModel(Users admin)
         {
             _themes = new ObservableCollection<string>
             {
@@ -92,9 +116,12 @@ namespace dapperPath.ViewModel
                 "en"
             };
             SelectedTheme = "ru";
-            
+            Admin = admin;
+            HelloUser = "Привет, " + Admin.Username;
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
             NavigateToPageAddEdit = new RelayCommand(NavigateToAddEdit);
+            OpenRegistration = new RelayCommand(OpenWindowRegistration);
+            OpenAutorization = new RelayCommand(OpenWindowAutorization);
             Back = new RelayCommand(GoBack);
             Next = new RelayCommand(GoNext);
             SetRuCommand = new RelayCommand(setRu);
@@ -102,7 +129,9 @@ namespace dapperPath.ViewModel
             CustomNavigate.CurrentPageChanged += OnCurrentPageChanged;
             bootsViewModel = new ShoesViewModel();
             addViewModel = new AddEditViewModel(null);
-          
+            registrationViewModel = new RegistrationViewModel();
+            autorizationViewModel = new AutorizationViewModel();
+
             CustomNavigate.NavigateTo(new ShoesPage(bootsViewModel));
 
         }
@@ -152,9 +181,36 @@ namespace dapperPath.ViewModel
         {
             SelectedTheme = "en";
         }
+        private void OpenWindowRegistration()
+        {
+            Registration registration = new Registration(registrationViewModel);
+            registration.Show();
+        }
+        private void OpenWindowAutorization()
+        {
+            Autorization autorization = new Autorization();
+            autorization.Show();
+        }
+        public void CloseConnect()
+        {
+            Users closedAdmin = dapperpathEntities.GetContext().Users.Where(u=>u.UserID == Admin.UserID).FirstOrDefault();
+            closedAdmin.IsConnected = false;
+            try
+            {
+                dapperpathEntities.GetContext().SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void OnCurrentPageChanged(object sender, PageChangedEventArgs e)
         {
             CurrentPage = e.NewPage;
+        }
+        private void OnCurrentShoeChanged(object sender, PageChangedEventArgs e)
+        {
+            CurrentShoe = e.NewPage;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

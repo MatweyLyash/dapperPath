@@ -11,20 +11,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace dapperPath.View
 {
     /// <summary>
-    /// Логика взаимодействия для CurrentShoesPage.xaml
+    /// Логика взаимодействия для Autorization.xaml
     /// </summary>
-    public partial class CurrentShoesPage : Page
+    public partial class Autorization : Window
     {
-        public CurrentShoesPage( CurrentShoesViewModel currentShoesViewModel)
+        public Autorization()
         {
             InitializeComponent();
-            DataContext = currentShoesViewModel;
         }
     }
 }

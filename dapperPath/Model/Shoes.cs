@@ -31,6 +31,8 @@ namespace dapperPath.Model
         public string Image { get; set; }
         public string Sex { get; set; }
         public Nullable<int> CategoryID { get; set; }
+        public string UnavailableSizes { get; set; }
+        public Nullable<decimal> Sale { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Cart { get; set; }

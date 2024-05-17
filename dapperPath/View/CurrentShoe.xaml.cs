@@ -1,5 +1,4 @@
-﻿using dapperPath.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace dapperPath.View
+namespace dapperPath.ViewModel
 {
     /// <summary>
-    /// Логика взаимодействия для CurrentShoesPage.xaml
+    /// Логика взаимодействия для CurrentShoe.xaml
     /// </summary>
-    public partial class CurrentShoesPage : Page
+    public partial class CurrentShoe : Page
     {
-        public CurrentShoesPage( CurrentShoesViewModel currentShoesViewModel)
+        public CurrentShoe(CurrentShoesViewModel currentShoesViewModel)
         {
             InitializeComponent();
             DataContext = currentShoesViewModel;

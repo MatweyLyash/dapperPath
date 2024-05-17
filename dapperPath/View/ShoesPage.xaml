@@ -10,9 +10,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ShoesPage"
       >
-    
-    
-
 
     <Border  Style="{DynamicResource MainContent}">
         <ListBox Name="LBoxStuff" ItemsSource="{Binding Shoes}">

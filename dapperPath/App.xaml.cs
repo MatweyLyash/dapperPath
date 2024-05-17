@@ -88,6 +88,7 @@ namespace dapperPath
         {
             cultureInfos.Add(new CultureInfo("en"));
             cultureInfos.Add(new CultureInfo("ru"));
+
         }
     }
 }

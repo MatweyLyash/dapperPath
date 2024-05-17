@@ -12,6 +12,7 @@
           <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="ProductID" Type="int" />
+          <Property Name="Size" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -52,6 +53,8 @@
           <Property Name="Image" Type="varchar" MaxLength="255" />
           <Property Name="Sex" Type="nvarchar" MaxLength="1" />
           <Property Name="CategoryID" Type="int" />
+          <Property Name="UnavailableSizes" Type="varchar" MaxLength="255" />
+          <Property Name="Sale" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -60,6 +63,8 @@
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="PasswordHash" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="IsConnected" Type="bit" />
         </EntityType>
         <EntityType Name="Wishlist">
           <Key>
@@ -71,7 +76,9 @@
           <Property Name="Size" Type="varchar" MaxLength="10" />
         </EntityType>
         <Association Name="FK__Cart__ProductID__4AB81AF0">
-          <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1" />
+          <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Shoes">
@@ -83,7 +90,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Cart__UserID__49C3F6B7">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -95,7 +104,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orders__UserID__4D94879B">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -107,7 +118,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Reviews__Product__5165187F">
-          <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1" />
+          <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Shoes">
@@ -119,7 +132,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Reviews__UserID__5070F446">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -220,6 +235,7 @@
           <Property Name="ProductID" Type="Int32" />
           <NavigationProperty Name="Shoes" Relationship="Self.FK__Cart__ProductID__4AB81AF0" FromRole="Cart" ToRole="Shoes" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Cart__UserID__49C3F6B7" FromRole="Cart" ToRole="Users" />
+          <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -260,6 +276,8 @@
           <Property Name="Sex" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="CategoryID" Type="Int32" />
           <NavigationProperty Name="ShoeCategory" Relationship="dapperpathModel.FK__Shoes__CategoryI__5CD6CB2B" FromRole="Shoes" ToRole="ShoeCategory" />
+          <Property Name="UnavailableSizes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Sale" Type="Decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -272,6 +290,8 @@
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__UserID__4D94879B" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__UserID__5070F446" FromRole="Users" ToRole="Reviews" />
           <NavigationProperty Name="Wishlist" Relationship="Self.FK__Wishlist__UserID__5441852A" FromRole="Users" ToRole="Wishlist" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="IsConnected" Type="Boolean" />
         </EntityType>
         <EntityType Name="Wishlist">
           <Key>
@@ -438,6 +458,7 @@
           <EntitySetMapping Name="Cart">
             <EntityTypeMapping TypeName="dapperpathModel.Cart">
               <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="CartID" ColumnName="CartID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -468,6 +489,8 @@
           <EntitySetMapping Name="Shoes">
             <EntityTypeMapping TypeName="dapperpathModel.Shoes">
               <MappingFragment StoreEntitySet="Shoes">
+                <ScalarProperty Name="Sale" ColumnName="Sale" />
+                <ScalarProperty Name="UnavailableSizes" ColumnName="UnavailableSizes" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Sex" ColumnName="Sex" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -483,6 +506,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="dapperpathModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsConnected" ColumnName="IsConnected" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />

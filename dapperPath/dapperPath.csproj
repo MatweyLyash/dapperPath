@@ -158,24 +158,52 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomControls\Review.xaml.cs">
+      <DependentUpon>Review.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\ShoesCard.xaml.cs">
       <DependentUpon>ShoesCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\SizeButton.xaml.cs">
+      <DependentUpon>SizeButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\SizesClass.cs" />
     <Compile Include="Model\ShoeCategory.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Resourses\NotZeroConverter.cs" />
     <Compile Include="ViewModel\AddEditViewModel.cs" />
+    <Compile Include="ViewModel\AutorizationViewModel.cs" />
+    <Compile Include="ViewModel\CurrentShoesViewModel.cs" />
+    <Compile Include="View\CurrentShoe.xaml.cs">
+      <DependentUpon>CurrentShoe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\CustomNavigate.cs" />
+    <Compile Include="ViewModel\RegistrationViewModel.cs" />
     <Compile Include="View\AddShoes.xaml.cs">
       <DependentUpon>AddShoes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Autorization.xaml.cs">
+      <DependentUpon>Autorization.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CurrentShoesPage.xaml.cs">
       <DependentUpon>CurrentShoesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ShoesPage.xaml.cs">
       <DependentUpon>ShoesPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\Review.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\ShoesCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\SizeButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -199,7 +227,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CurrentShoe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddShoes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Autorization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -222,6 +258,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resourses\style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Registration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

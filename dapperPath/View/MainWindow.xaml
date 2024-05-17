@@ -9,10 +9,8 @@
         mc:Ignorable="d"
         Cursor="{StaticResource customCursor}"
         Title="dapperPath" Height="1080" Width="1920" MinHeight="720" MinWidth="1080" WindowState="Maximized">
+
     
-    <Window.DataContext>
-        <viewmodel:MainViewModel/>
-    </Window.DataContext>
     <Window.Icon>
         <BitmapImage UriSource="/Resourses/Gallery/dP.ico" />
     </Window.Icon>
@@ -102,16 +100,7 @@
                                         <Image Source="/Resourses/Gallery/like.png" Stretch="Uniform" />
                                     </Button.Content>
                                 </Button>
-                                <Button>
-                                    <Button.Content>
-                                        <Image Source="/Resourses/Gallery/user.png" Stretch="Uniform" />
-                                    </Button.Content>
-                                </Button>
-                                <Button>
-                                    <Button.Content>
-                                        <Image Source="/Resourses/Gallery/new_user.png" Stretch="Uniform" />
-                                    </Button.Content>
-                                </Button>
+                                <TextBlock Text="{Binding HelloUser}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
 
                             </DockPanel>
 
@@ -143,9 +132,7 @@
                     <Button x:Name="darlTheme" Click="ChangeDarkTheme" Content="Dark"/>
                 </StackPanel>
             </ScrollViewer>
-
         </Border>
         <Frame NavigationUIVisibility="Hidden" x:Name="MainContent" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="3" Content="{Binding CurrentPage}" Cursor=""></Frame>
-
     </Grid>
 </Window>

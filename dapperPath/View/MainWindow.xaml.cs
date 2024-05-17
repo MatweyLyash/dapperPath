@@ -3,6 +3,7 @@ using dapperPath.ViewModel;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -25,12 +26,17 @@ namespace dapperPath.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainViewModel mainViewModel;
-
-        public MainWindow()
+        MainViewModel model;
+        public MainWindow(MainViewModel mainViewModel)
         {
             InitializeComponent();
-
+            DataContext = mainViewModel;
+            model = mainViewModel;
+            Closing += AppClosing;
+        }
+        private void AppClosing(object sender, CancelEventArgs e)
+        {
+            model.CloseConnect();
         }
 
         private void rus(object sender, RoutedEventArgs e)

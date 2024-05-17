@@ -29,28 +29,34 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Название" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Style="{DynamicResource JustText}"/>
                 <TextBlock Text="Бренд"  Grid.RowSpan="3" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
-                <TextBlock Text="Размеры" Grid.Row="2"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
-                <TextBlock Text="Описание" Grid.Row="3" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
-                <TextBlock Text="Изображение" Grid.Row="4"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
-                <TextBlock Text="Цена" Grid.Row="5"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
-                <TextBlock Text="Пол" Grid.Row="6"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
-                <TextBlock Text="Категория" Grid.Row="7" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Доступные размеры" Grid.Row="2"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Недоступные размеры" Grid.Row="3" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Описание" Grid.Row="4" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Изображение" Grid.Row="5"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Цена" Grid.Row="6"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Цена со скидкой" Grid.Row="7" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Пол" Grid.Row="8"  HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
+                <TextBlock Text="Категория" Grid.Row="9" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Style="{DynamicResource JustText}"/>
                 
                 <TextBox Text="{Binding Title}" Grid.Column="1" Style = "{DynamicResource Input}" MaxLength="32"/>
                 <TextBox Text="{Binding Brand}" Grid.Column="1"  Grid.Row="1"  Style = "{DynamicResource Input}" MaxLength="15" />
                 <TextBox Text="{Binding AvaibilitySizes}" Grid.Column="1" Grid.Row="2"    Style = "{DynamicResource Input}"/>
-                <TextBox Text="{Binding Description}"  Grid.Column="1" Grid.Row="3"  Style = "{DynamicResource Input}"/>
-                <Image Source="{Binding Image}" Grid.Column="1" Grid.Row="4"/>
-                <TextBox Text="{Binding Price}" Grid.Column="1" Grid.Row="5"   Style = "{DynamicResource Input}"/>
-                <TextBox Text="{Binding Sex}" Grid.Column="1" Grid.Row="6"   Style = "{DynamicResource Input}"/>
-                <ComboBox ItemsSource="{Binding CategoryCollection}" SelectedItem="{Binding Category}" Grid.Column="1" Grid.Row="7" x:Name="comboCategorHy" materialDesign:HintAssist.Hint="{Binding Category}"/>
-                <Button HorizontalAlignment="Center" Grid.Row="8" Content="Назад"  Command="{Binding NavigateBackCommand}" Template="{DynamicResource btnBack}" />
-                <Button HorizontalAlignment="Left" Grid.Row="8" Grid.Column="1" Content="Сохранить"  Command="{Binding SaveBootsCommand}" Style="{DynamicResource saveReact}" />
-                <Button HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Content="Выбрать изображение" Command="{Binding OpenDialog}" />
+                <TextBox Text="{Binding UnavaibilitySizes}" Grid.Column="1" Grid.Row="3" Style = "{DynamicResource Input}"/>
+                <TextBox Text="{Binding Description}"  Grid.Column="1" Grid.Row="4"  Style = "{DynamicResource Input}"/>
+                <Image Source="{Binding Image}" Grid.Column="1" Grid.Row="5"/>
+                <Button HorizontalAlignment="Right" Grid.Row="5" Grid.Column="1" Content="Выбрать изображение" Command="{Binding OpenDialog}" />
+                <TextBox Text="{Binding Price}" Grid.Column="1" Grid.Row="6"   Style = "{DynamicResource Input}"/>
+                <TextBox Text="{Binding Sale}" Grid.Column="1" Grid.Row="7" Style="{DynamicResource Input}"/>
+                <TextBox Text="{Binding Sex}" Grid.Column="1" Grid.Row="8"   Style = "{DynamicResource Input}"/>
+                <ComboBox ItemsSource="{Binding CategoryCollection}" SelectedItem="{Binding Category}" Grid.Column="1" Grid.Row="9" x:Name="comboCategorHy" materialDesign:HintAssist.Hint="{Binding Category}"/>
+                <Button HorizontalAlignment="Center" Grid.Row="10" Content="Назад"  Command="{Binding NavigateBackCommand}" Template="{DynamicResource btnBack}" />
+                <Button HorizontalAlignment="Left" Grid.Row="10" Grid.Column="1" Content="Сохранить"  Command="{Binding SaveBootsCommand}" Style="{DynamicResource saveReact}" />
             </Grid>
         </Border>
     </Grid>

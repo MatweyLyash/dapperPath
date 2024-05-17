@@ -29,6 +29,12 @@ namespace dapperPath.ViewModel
             // Вызываем событие об изменении текущей страницы
             OnCurrentPageChanged(page);
         }
+        public static void NavigateShoe(Page page)
+        {
+            pageStack.Push(page);
+
+            OnCurrnetShoeChanged(page);
+        }
 
         public static void GoBack()
         {
@@ -67,10 +73,15 @@ namespace dapperPath.ViewModel
         }
 
         public static event EventHandler<PageChangedEventArgs> CurrentPageChanged;
+        public static event EventHandler<PageChangedEventArgs> CurrentShoeChanged;
 
         private static void OnCurrentPageChanged(Page newPage)
         {
             CurrentPageChanged?.Invoke(null, new PageChangedEventArgs(newPage));
+        }
+        private static void OnCurrnetShoeChanged(Page newPage)
+        {
+            CurrentShoeChanged?.Invoke(null, new PageChangedEventArgs(newPage));
         }
     }
     public class PageChangedEventArgs : EventArgs

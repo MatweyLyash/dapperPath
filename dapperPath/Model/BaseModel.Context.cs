@@ -18,7 +18,7 @@ namespace dapperPath.Model
         private static dapperpathEntities _context;
         public static dapperpathEntities GetContext()
         {
-            if (_context == null)
+            if(_context == null)
             {
                 _context = new dapperpathEntities();
             }

@@ -70,6 +70,16 @@ namespace dapperPath.ViewModel
                 RaisePropertyChanged(nameof(AvaibilitySizes));
             }
         }
+        private string _unavaibilitySizes;
+        public string UnavaibilitySizes
+        {
+            get { return _unavaibilitySizes; }
+            set
+            {
+                _unavaibilitySizes = value;
+                RaisePropertyChanged(nameof(UnavaibilitySizes));
+            }
+        }
 
         private string _description;
         public string Description
@@ -103,6 +113,16 @@ namespace dapperPath.ViewModel
                 RaisePropertyChanged(nameof(Price));
             }
         }
+        private decimal _sale;
+        public decimal Sale
+        {
+            get { return _sale; }
+            set
+            {
+                _sale = value;
+                RaisePropertyChanged(nameof(Sale));
+            }
+        }
 
         private string _sex;
         public string Sex
@@ -117,14 +137,22 @@ namespace dapperPath.ViewModel
 
         public int CategoryID
         {
-            get {
+            get
+            {
                 Dictionary<string, int> categoriesDict = new Dictionary<string, int>()
                 {
                     {"Кроссовки",1 },{ "Ботинки",2},{ "Туфли",5},{ "Спортивная",3},{ "Аксессуары",4}
                 };
-                return categoriesDict[Category];
+                if (Category != null)
+                {
+                    return categoriesDict[Category];
+                }
+                else
+                {
+                    return 0;
+                }
             }
-            
+
         }
         private string _category;
         public string Category
@@ -137,7 +165,7 @@ namespace dapperPath.ViewModel
             }
         }
 
-        public AddEditViewModel( Shoes selectedItem)
+        public AddEditViewModel(Shoes selectedItem)
         {
             _categoryCollection = dapperpathEntities.GetContext().ShoeCategory.Select(c => c.CategoryName).ToList();
 
@@ -148,19 +176,24 @@ namespace dapperPath.ViewModel
                     ProductID = selectedItem.ProductID,
                     Title = selectedItem.Title,
                     Brand = selectedItem.Brand,
+                    UnavailableSizes = selectedItem.UnavailableSizes,
                     AvailableSizes = selectedItem.AvailableSizes,
                     Description = selectedItem.Description,
                     Image = selectedItem.Image,
                     Price = selectedItem.Price,
+                    Sale = selectedItem.Sale,
                     Sex = selectedItem.Sex,
                     CategoryID = selectedItem.CategoryID
+
                 };
                 Title = selectedItem.Title;
                 Brand = selectedItem.Brand;
+                UnavaibilitySizes = selectedItem.UnavailableSizes;
                 AvaibilitySizes = selectedItem.AvailableSizes;
                 Description = selectedItem.Description;
                 Image = selectedItem.Image;
                 Price = (decimal)selectedItem.Price;
+                Sale = (decimal)selectedItem.Sale;
                 Sex = selectedItem.Sex;
                 Category = selectedItem.ShoeCategory.CategoryName;
 
@@ -177,12 +210,13 @@ namespace dapperPath.ViewModel
         {
             CustomNavigate.GoBack();
         }
- 
+
         public void SaveBoots()
         {
             _currentShoes.Title = Title;
             _currentShoes.Brand = Brand;
             _currentShoes.AvailableSizes = AvaibilitySizes;
+            _currentShoes.UnavailableSizes = UnavaibilitySizes;
             _currentShoes.Description = Description;
             _currentShoes.Image = Image;
             _currentShoes.Price = Price;
@@ -202,7 +236,7 @@ namespace dapperPath.ViewModel
             {
                 error.AppendLine("Укажите описание пары");
             }
-            if (_currentShoes.CategoryID==null)
+            if (_currentShoes.CategoryID == 0)
             {
                 error.AppendLine("Укажите категорию пары");
             }
@@ -210,33 +244,39 @@ namespace dapperPath.ViewModel
             {
                 error.AppendLine("Укажите цену пары");
             }
-            if (_currentShoes.Sex!="W"&&_currentShoes.Sex!="M")
+            if (_currentShoes.Sex != "W" && _currentShoes.Sex != "M")
             {
                 error.AppendLine("Укажите пол целевого покупателя\n W или M");
             }
+            if (string.IsNullOrWhiteSpace(_currentShoes.AvailableSizes))
+            {
+                error.AppendLine("Укажите доступные размеры");
+            }
 
-            if(error.Length > 0)
+            if (error.Length > 0)
             {
                 MessageBox.Show(error.ToString());
                 return;
             }
-            
+
             if (_currentShoes.ProductID == 0)
             {
-               dapperpathEntities.GetContext().Shoes.Add(_currentShoes);
+                dapperpathEntities.GetContext().Shoes.Add(_currentShoes);
             }
             else
             {
-               Shoes shoes = dapperpathEntities.GetContext().Shoes.Where(s => s.ProductID == _currentShoes.ProductID).FirstOrDefault();
-                    shoes.Title = Title;
-                    shoes.Brand = Brand;
-                    shoes.AvailableSizes = AvaibilitySizes;
-                    shoes.Description = Description;
-                    shoes.Image = Image;
-                    shoes.Price = Price;
-                    shoes.Sex = Sex;
-                    shoes.CategoryID = CategoryID;
-                
+                Shoes shoes = dapperpathEntities.GetContext().Shoes.Where(s => s.ProductID == _currentShoes.ProductID).FirstOrDefault();
+                shoes.Title = Title;
+                shoes.Brand = Brand;
+                shoes.AvailableSizes = AvaibilitySizes;
+                shoes.UnavailableSizes = UnavaibilitySizes;
+                shoes.Description = Description;
+                shoes.Image = Image;
+                shoes.Price = Price;
+                shoes.Sale = Sale;
+                shoes.Sex = Sex;
+                shoes.CategoryID = CategoryID;
+
             }
             try
             {
@@ -244,7 +284,7 @@ namespace dapperPath.ViewModel
                 MessageBox.Show("Информация сохранена");
                 CustomNavigate.GoBack();
                 ShoesViewModel.Instance.RefreshShoes();
-               
+
             }
             catch (Exception ex)
             {
@@ -264,6 +304,6 @@ namespace dapperPath.ViewModel
             }
         }
 
-        
+
     }
 }
