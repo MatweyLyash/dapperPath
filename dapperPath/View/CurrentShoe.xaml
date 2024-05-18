@@ -83,14 +83,14 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <usercontrols:SizeButton DataContext="{Binding}" />
+                                <usercontrols:SizeButtonUn DataContext="{Binding}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
                 <Button Content="Назад" Grid.Column="2" Grid.Row="2"  Command="{Binding BackCommand}" Height="32"  />
                 <Button Content="Добавить в корзину" Grid.Column="4" Grid.Row="2"   Height="32" />
-                <Button Content="Добавить в избранное" Grid.Column="3" Grid.Row="2"  Height="32" />
+                <Button Content="Добавить в желаемое" Grid.Column="3" Grid.Row="2"  Height="32"  Command="{Binding AddWishListCommand}"/>
                 <TextBlock Text="{Binding Description}" Grid.ColumnSpan="2" Grid.Row="2" FontSize="20" Margin="20,0,20,0"/>
                 <Grid Grid.Row="3" Grid.ColumnSpan="5">
                     <Grid.RowDefinitions>
@@ -99,8 +99,8 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Отзывы" HorizontalAlignment="Center"  FontSize="30"/>
-                    <TextBox Text="{Binding MyReview}" Grid.Row="1"  MaxLength="1000" FontSize="20" Width="600"/>
-                    <Button Grid.Row="2" Content="Отправить" Command="{Binding SendReviewCommand}" HorizontalAlignment="Right" Margin="0,0,50,0"/>
+                    <TextBox Text="{Binding MyReview}" Grid.Row="1"  MaxLength="1000" FontSize="20" Width="800"/>
+                    <Button Grid.Row="2" Content="Отправить" Command="{Binding SendReviewCommand}" HorizontalAlignment="Right" Margin="0,20,50,0"/>
                 </Grid>
                 <ListBox Name="ReviewsListBox" ItemsSource="{Binding Reviews}" Grid.Row="4" Grid.ColumnSpan="5"  VerticalAlignment="Stretch">
                     <ListBox.ItemsPanel>

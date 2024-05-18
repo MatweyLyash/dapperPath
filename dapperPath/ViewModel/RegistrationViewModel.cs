@@ -28,7 +28,15 @@ namespace dapperPath.ViewModel
         private string _password;
         public string Password
         {
-            get { return _password; }
+            get
+            {
+                Autorization autorization = App.Current.MainWindow as Autorization;
+                if (autorization != null)
+                {
+                    _password = autorization.passwordText.Password;
+                }
+                return _password;
+            }
             set
             {
                 _password = value;

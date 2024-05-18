@@ -28,15 +28,13 @@ namespace dapperPath.ViewModel
         public ICommand Next { get; }
         public ICommand SetRuCommand { get; }
         public ICommand SetEngCommand { get; }
-        public ICommand OpenRegistration { get; } 
-        public ICommand OpenAutorization { get; }
+
+        public ICommand OpenWishListCommand { get; }
         public Users Admin { get; set; }
         public ShoesViewModel bootsViewModel { get; }
         public AddEditViewModel addViewModel { get; }
         public ShoesViewModel editViewModel { get;}
         public CurrentShoesViewModel currentShoesViewModel { get; }
-        public RegistrationViewModel registrationViewModel { get; }
-        public AutorizationViewModel autorizationViewModel { get; }
         
         private Page _currentPage;
         public Page CurrentPage
@@ -121,8 +119,7 @@ namespace dapperPath.ViewModel
             HelloUser = "Привет, " + Admin.Username;
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
             NavigateToPageAddEdit = new RelayCommand(NavigateToAddEdit);
-            OpenRegistration = new RelayCommand(OpenWindowRegistration);
-            OpenAutorization = new RelayCommand(OpenWindowAutorization);
+            OpenWishListCommand = new RelayCommand(OpenWishList);
             Back = new RelayCommand(GoBack);
             Next = new RelayCommand(GoNext);
             SetRuCommand = new RelayCommand(setRu);
@@ -130,12 +127,9 @@ namespace dapperPath.ViewModel
             CustomNavigate.CurrentPageChanged += OnCurrentPageChanged;
             bootsViewModel = new ShoesViewModel();
             addViewModel = new AddEditViewModel(null);
-            registrationViewModel = new RegistrationViewModel();
-            autorizationViewModel = new AutorizationViewModel();
+            
 
             CustomNavigate.NavigateTo(new ShoesPage(bootsViewModel));
-
-            //Нужно передать в конструктор ShoesViewModel пользователя, а потом его передать в CurrentShoeViewModel 
         }
 
 
@@ -183,16 +177,13 @@ namespace dapperPath.ViewModel
         {
             SelectedTheme = "en";
         }
-        private void OpenWindowRegistration()
+        private void OpenWishList()
         {
-            Registration registration = new Registration(registrationViewModel);
-            registration.Show();
+            WishListViewModel wishlistViewModel = new WishListViewModel();
+            CustomNavigate.NavigateTo(new View.Wishlist(wishlistViewModel));
         }
-        private void OpenWindowAutorization()
-        {
-            Autorization autorization = new Autorization();
-            autorization.Show();
-        }
+
+
         public void CloseConnect()
         {
             Users closedAdmin = dapperpathEntities.GetContext().Users.Where(u=>u.UserID == Admin.UserID).FirstOrDefault();

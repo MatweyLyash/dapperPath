@@ -167,7 +167,13 @@
     <Compile Include="CustomControls\SizeButton.xaml.cs">
       <DependentUpon>SizeButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\SizeButtonUn.xaml.cs">
+      <DependentUpon>SizeButtonUn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\SizesClass.cs" />
+    <Compile Include="CustomControls\WishListCard.xaml.cs">
+      <DependentUpon>WishListCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\ShoeCategory.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
@@ -176,6 +182,7 @@
     <Compile Include="ViewModel\AddEditViewModel.cs" />
     <Compile Include="ViewModel\AutorizationViewModel.cs" />
     <Compile Include="ViewModel\CurrentShoesViewModel.cs" />
+    <Compile Include="ViewModel\WishListViewModel.cs" />
     <Compile Include="View\CurrentShoe.xaml.cs">
       <DependentUpon>CurrentShoe.xaml</DependentUpon>
     </Compile>
@@ -196,6 +203,9 @@
     <Compile Include="View\ShoesPage.xaml.cs">
       <DependentUpon>ShoesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Wishlist.xaml.cs">
+      <DependentUpon>Wishlist.xaml</DependentUpon>
+    </Compile>
     <Page Include="CustomControls\Review.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +215,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\SizeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\SizeButtonUn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\WishListCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -267,6 +285,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ShoesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Wishlist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

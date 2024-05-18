@@ -1,5 +1,6 @@
 ﻿using dapperPath.CustomControls;
 using dapperPath.Model;
+using dapperPath.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -13,13 +14,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Wishlist = dapperPath.Model.Wishlist;
 
 namespace dapperPath.ViewModel
 {
     public class CurrentShoesViewModel:ViewModelBase
     {
+        #region Fields and Properties
 
         private string _title;
+
         public string Title
         {
             get { return _title; }
@@ -60,7 +64,30 @@ namespace dapperPath.ViewModel
             {
                 return _unSizes;
             }
-            set {  _unSizes = value; RaisePropertyChanged(); }
+            set { _unSizes = value; RaisePropertyChanged(); }
+        }
+        private SizesClass _currentSize;
+        public SizesClass CurrentSize
+        {
+            get { return _currentSize; }
+            set
+            {
+                _currentSize = value;
+                RaisePropertyChanged(nameof(CurrentSize));
+            }
+        }
+        private SizesClass _currentUnSize;
+        public SizesClass CurrentUnSize
+        {
+            get
+            {
+                return _currentUnSize;
+            }
+            set
+            {
+                _currentUnSize = value;
+                RaisePropertyChanged(nameof(CurrentUnSize));
+            }
         }
         private ObservableCollection<SizesClass> _allSizes;
         public ObservableCollection<SizesClass> SizesCurrentShoe
@@ -247,8 +274,20 @@ namespace dapperPath.ViewModel
                 RaisePropertyChanged(nameof(CurrentShoe));
             }
         }
+
+        public Wishlist WishesShoes;
+
+        #endregion
+
+
+
+
         public ICommand SendReviewCommand { get; }
         public ICommand BackCommand { get; }
+        public ICommand AddWishListCommand { get; }
+        public ICommand SetSizeCommand { get; }
+        public ICommand SetSizeUnCommand { get; }
+
         public ObservableCollection<Reviews> Reviews { get; set; }
         public List<Reviews> currentShoeReviewList;
         public CurrentShoesViewModel(Shoes shoes)
@@ -263,7 +302,7 @@ namespace dapperPath.ViewModel
             Unsizes = new ObservableCollection<string>(SizeToListUn(shoes.UnavailableSizes));
             SizesCurrentShoe = new ObservableCollection<SizesClass>();
             UnSizesCurrentShoe = new ObservableCollection<SizesClass>();
-            currentShoeReviewList = dapperpathEntities.GetContext().Reviews.Where(r=>r.ProductID == ProductID).Include(r => r.Users).ToList(); 
+            currentShoeReviewList = dapperpathEntities.GetContext().Reviews.Where(r=>r.ProductID == ProductID).Include(r => r.Users).OrderByDescending(r => r.ReviewID).ToList(); 
             Reviews = new ObservableCollection<Reviews>(currentShoeReviewList);
             foreach (var item in Sizes)
             {
@@ -289,6 +328,9 @@ namespace dapperPath.ViewModel
             Category = shoes.ShoeCategory.CategoryName;
             BackCommand = new RelayCommand(Back);
             SendReviewCommand = new RelayCommand(SendReview);
+            AddWishListCommand = new RelayCommand(AddWishList);
+            SetSizeCommand = new RelayCommand<SizesClass>(setSize);
+            SetSizeUnCommand = new RelayCommand<SizesClass>(setUnSize);
         }
         public List<string> SizeToList(string sizes)
         {
@@ -351,6 +393,16 @@ namespace dapperPath.ViewModel
         {
             CustomNavigate.GoBack();
         }
+        private void setSize(SizesClass size)
+        {
+            CurrentSize = size;
+            CurrentUnSize = null;
+        }
+        private void setUnSize(SizesClass size)
+        {
+            CurrentUnSize = size;
+            CurrentSize = null;
+        }
         private void SendReview()
         {
             Review.ReviewText = MyReview;
@@ -361,15 +413,52 @@ namespace dapperPath.ViewModel
             try
             {
                 dapperpathEntities.GetContext().SaveChanges();
+                CustomNavigate.RefreshPeak(new CurrentShoe(new CurrentShoesViewModel(CurrentShoe)));
                 MessageBox.Show("Информация сохранена");
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        private void AddWishList()
+        {
+            WishesShoes = new Wishlist();
+             WishesShoes.ProductID = CurrentShoe.ProductID;
+            if (CurrentSize != null&& CurrentUnSize==null)
+            {
+                WishesShoes.Size = CurrentSize.Size;
+            }
+            else if(CurrentSize==null && CurrentUnSize!=null)
+            {
+                WishesShoes.Size = CurrentUnSize.Size;
+            }
+            else
+            {
+                MessageBox.Show("Не указан размер пары");
+                return;
+            }
+            WishesShoes.UserID = User.UserID;
+            Wishlist copy = dapperpathEntities.GetContext().Wishlist.Where(w => w.ProductID == WishesShoes.ProductID && w.UserID == User.UserID&&w.Size == WishesShoes.Size).FirstOrDefault();
+            if (copy!=null)
+            {
+                MessageBox.Show("Данная пара уже находится в желаемых");
+                return;
+            }
+                dapperpathEntities.GetContext().Wishlist.Add(WishesShoes);
+            try
+            {
+                dapperpathEntities.GetContext().SaveChanges();
+                MessageBox.Show("Добавлено в желаемое");
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
-
         }
+
     }
 }

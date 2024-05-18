@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:dapperPath.View"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         Title="Registration" Height="450" Width="300">
     <Window.Icon>
         <BitmapImage UriSource="/Resourses/Gallery/dP.ico" />
@@ -25,7 +27,7 @@
             <TextBlock Text="Логин" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Margin="10,0,0,0"/>
             <TextBox Text="{Binding Login}" Grid.Row="2"  Width="250" Height="40" VerticalAlignment="Bottom" FontSize="20"/>
             <TextBlock Text="Пароль" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" Margin="10,0,0,0"/>
-            <TextBox Text="{Binding Password}" Grid.Row="3"  Width="250" Height="40" VerticalAlignment="Bottom" />
+            <PasswordBox x:Name="passwordText" Grid.Row="3"  Width="250" Height="40" VerticalAlignment="Bottom" />
             <Button Command="{Binding RegistNow}" Grid.Row="4" Content="Зарегистрироваться" Width="200"/>
             <Button Grid.Row="5" Content="Есть аккаунт?" HorizontalAlignment="Right" Command="{Binding ShowAutorizationCommand}"/>
         </Grid>

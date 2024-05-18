@@ -29,7 +29,15 @@ namespace dapperPath.ViewModel
         private string _password;
         public string Password
         {
-            get { return _password; }
+            get
+            {
+                Autorization autorization = App.Current.MainWindow as Autorization;
+                if (autorization != null)
+                {
+                    _password = autorization.passwordText.Password;
+                }
+                return _password;
+            }
             set
             {
                 _password = value;
@@ -51,7 +59,7 @@ namespace dapperPath.ViewModel
         List<Users> users;
         public AutorizationViewModel()
         {
-          
+
             users = dapperpathEntities.GetContext().Users.ToList();
             SingIn = new RelayCommand(SingInUser);
             ShowRegistrationCommmad = new RelayCommand(ShowRegistration);
@@ -96,6 +104,7 @@ namespace dapperPath.ViewModel
             }
             else if(users.Any(u => u.Username == user.Username) && users.Any(u => u.PasswordHash == pas))
             {
+                AdminUser = users.Where(u => u.Username == user.Username && u.PasswordHash==pas).FirstOrDefault();
                 MessageBox.Show("привет пользователь");
             }
             else

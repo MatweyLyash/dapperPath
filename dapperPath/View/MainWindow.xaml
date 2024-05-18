@@ -90,12 +90,12 @@
                                         <Setter Property="BorderBrush" Value="Transparent"/>
                                     </Style>
                                 </DockPanel.Resources>
-                                <Button>
+                                <Button >
                                     <Button.Content>
                                         <Image Source="/Resourses/Gallery/basked.png" Stretch="Uniform" />
                                     </Button.Content>
                                 </Button>
-                                <Button>
+                                <Button Command="{Binding OpenWishListCommand}">
                                     <Button.Content>
                                         <Image Source="/Resourses/Gallery/like.png" Stretch="Uniform" />
                                     </Button.Content>
