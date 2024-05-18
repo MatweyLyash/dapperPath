@@ -172,6 +172,7 @@
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Resourses\NotZeroConverter.cs" />
+    <Compile Include="ViewModel\ActiveUser.cs" />
     <Compile Include="ViewModel\AddEditViewModel.cs" />
     <Compile Include="ViewModel\AutorizationViewModel.cs" />
     <Compile Include="ViewModel\CurrentShoesViewModel.cs" />

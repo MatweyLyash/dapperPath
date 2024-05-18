@@ -29,7 +29,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="TextBlock" x:Key="saleText">
+    <!--<Style TargetType="TextBlock" x:Key="saleText">
         <Style.Triggers>
             <DataTrigger Binding="{Binding Sale}" Value="0">
                 <Setter Property="Foreground" Value="Transparent" />
@@ -41,7 +41,7 @@
                 <Setter Property="Foreground" Value="#f44336" />
             </DataTrigger>
         </Style.Triggers>
-    </Style>
+    </Style>-->
 
 
 

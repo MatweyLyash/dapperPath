@@ -117,6 +117,7 @@ namespace dapperPath.ViewModel
             };
             SelectedTheme = "ru";
             Admin = admin;
+            ActiveUser.Users = Admin;
             HelloUser = "Привет, " + Admin.Username;
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
             NavigateToPageAddEdit = new RelayCommand(NavigateToAddEdit);
@@ -134,6 +135,7 @@ namespace dapperPath.ViewModel
 
             CustomNavigate.NavigateTo(new ShoesPage(bootsViewModel));
 
+            //Нужно передать в конструктор ShoesViewModel пользователя, а потом его передать в CurrentShoeViewModel 
         }
 
 

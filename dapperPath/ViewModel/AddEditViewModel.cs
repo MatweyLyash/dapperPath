@@ -193,7 +193,15 @@ namespace dapperPath.ViewModel
                 Description = selectedItem.Description;
                 Image = selectedItem.Image;
                 Price = (decimal)selectedItem.Price;
-                Sale = (decimal)selectedItem.Sale;
+                if(selectedItem.Sale == null)
+                {
+                    Sale = 0;
+                }
+                else
+                {
+                    Sale = (decimal)selectedItem.Sale;
+
+                }
                 Sex = selectedItem.Sex;
                 Category = selectedItem.ShoeCategory.CategoryName;
 
