@@ -28,8 +28,10 @@ namespace dapperPath.ViewModel
         public ICommand Next { get; }
         public ICommand SetRuCommand { get; }
         public ICommand SetEngCommand { get; }
-
+        public ICommand OpenDispatcherCommand { get; }
         public ICommand OpenWishListCommand { get; }
+        public ICommand OpenCartPageCommand { get; }
+        public ICommand OpenPersonalCommand { get; }
         public Users Admin { get; set; }
         public ShoesViewModel bootsViewModel { get; }
         public AddEditViewModel addViewModel { get; }
@@ -120,10 +122,13 @@ namespace dapperPath.ViewModel
             NavigateBoots = new RelayCommand(NavigateToBootsPage);
             NavigateToPageAddEdit = new RelayCommand(NavigateToAddEdit);
             OpenWishListCommand = new RelayCommand(OpenWishList);
+            OpenCartPageCommand = new RelayCommand(OpenCart);
+            OpenDispatcherCommand = new RelayCommand(OpenDispatcher);
             Back = new RelayCommand(GoBack);
             Next = new RelayCommand(GoNext);
             SetRuCommand = new RelayCommand(setRu);
             SetEngCommand = new RelayCommand(setEng);
+            OpenPersonalCommand = new RelayCommand(OpenPersonal);
             CustomNavigate.CurrentPageChanged += OnCurrentPageChanged;
             bootsViewModel = new ShoesViewModel();
             addViewModel = new AddEditViewModel(null);
@@ -142,9 +147,14 @@ namespace dapperPath.ViewModel
             CustomNavigate.NavigateTo(new AddShoes(addViewModel));
 
         }
+        private void OpenDispatcher()
+        {
+            CustomNavigate.NavigateTo(new DispatcherPage(new DispatcherViewModel()));
+        }
         private void GoBack()
         {
             CustomNavigate.GoBack();
+            ShoesViewModel.Instance.RefreshShoes();
         }
         private void GoNext()
         {
@@ -182,8 +192,14 @@ namespace dapperPath.ViewModel
             WishListViewModel wishlistViewModel = new WishListViewModel();
             CustomNavigate.NavigateTo(new View.Wishlist(wishlistViewModel));
         }
-
-
+        private void OpenCart()
+        {
+            CustomNavigate.NavigateTo(new CardPage(new CardPageViewModel()));
+        }
+        private void OpenPersonal()
+        {
+            CustomNavigate.NavigateTo(new PersonalCabinet(new PersonalCabinetViewModel()));
+        }
         public void CloseConnect()
         {
             Users closedAdmin = dapperpathEntities.GetContext().Users.Where(u=>u.UserID == Admin.UserID).FirstOrDefault();
@@ -196,6 +212,12 @@ namespace dapperPath.ViewModel
             {
                 MessageBox.Show(ex.Message);
             }
+            Autorization autorization = new Autorization();
+            var window = Application.Current.MainWindow;
+            window.Close();
+            App.Current.MainWindow = autorization;
+            autorization.Show();
+
         }
         private void OnCurrentPageChanged(object sender, PageChangedEventArgs e)
         {

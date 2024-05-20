@@ -206,7 +206,7 @@ namespace dapperPath.ViewModel
         public void RefreshShoes()
         {
             currentStuff = dapperpathEntities.GetContext().Shoes.ToList();
-            Shoes = new ObservableCollection<Shoes>(currentStuff);
+            Shoes = new ObservableCollection<Shoes>(currentStuff); 
             CustomNavigate.RefreshPeak(new ShoesPage(new ShoesViewModel()));
         }
         private void DeleteShoes(Shoes shoes)

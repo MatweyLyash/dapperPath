@@ -23,6 +23,8 @@
           <Property Name="ShippingAddress" Type="varchar" MaxLength="255" />
           <Property Name="ShippingMethod" Type="varchar" MaxLength="255" />
           <Property Name="PaymentMethod" Type="varchar" MaxLength="255" />
+          <Property Name="Sum" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ProductID" Type="int" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -65,6 +67,7 @@
           <Property Name="PasswordHash" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Status" Type="bit" />
           <Property Name="IsConnected" Type="bit" />
+          <Property Name="IsBanned" Type="bit" />
         </EntityType>
         <EntityType Name="Wishlist">
           <Key>
@@ -74,6 +77,7 @@
           <Property Name="UserID" Type="int" />
           <Property Name="ProductID" Type="int" />
           <Property Name="Size" Type="varchar" MaxLength="10" />
+          <Property Name="IsAvailable" Type="bit" />
         </EntityType>
         <Association Name="FK__Cart__ProductID__4AB81AF0">
           <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1">
@@ -100,6 +104,20 @@
             </Principal>
             <Dependent Role="Cart">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__ProductI__02084FDA">
+          <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shoes">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -146,7 +164,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Shoes__CategoryI__5CD6CB2B">
-          <End Role="ShoeCategory" Type="Self.ShoeCategory" Multiplicity="0..1" />
+          <End Role="ShoeCategory" Type="Self.ShoeCategory" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Shoes" Type="Self.Shoes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShoeCategory">
@@ -158,7 +178,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Wishlist__Produc__5535A963">
-          <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1" />
+          <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Shoes">
@@ -170,7 +192,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Wishlist__UserID__5441852A">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -196,6 +220,10 @@
           <AssociationSet Name="FK__Cart__UserID__49C3F6B7" Association="Self.FK__Cart__UserID__49C3F6B7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__ProductI__02084FDA" Association="Self.FK__Orders__ProductI__02084FDA">
+            <End Role="Shoes" EntitySet="Shoes" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK__Orders__UserID__4D94879B" Association="Self.FK__Orders__UserID__4D94879B">
             <End Role="Users" EntitySet="Users" />
@@ -247,6 +275,9 @@
           <Property Name="ShippingMethod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="PaymentMethod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Orders__UserID__4D94879B" FromRole="Orders" ToRole="Users" />
+          <Property Name="Sum" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ProductID" Type="Int32" />
+          <NavigationProperty Name="Shoes" Relationship="dapperpathModel.FK__Orders__ProductI__02084FDA" FromRole="Orders" ToRole="Shoes" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -278,6 +309,7 @@
           <NavigationProperty Name="ShoeCategory" Relationship="dapperpathModel.FK__Shoes__CategoryI__5CD6CB2B" FromRole="Shoes" ToRole="ShoeCategory" />
           <Property Name="UnavailableSizes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Sale" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Orders" Relationship="dapperpathModel.FK__Orders__ProductI__02084FDA" FromRole="Shoes" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -292,6 +324,7 @@
           <NavigationProperty Name="Wishlist" Relationship="Self.FK__Wishlist__UserID__5441852A" FromRole="Users" ToRole="Wishlist" />
           <Property Name="Status" Type="Boolean" />
           <Property Name="IsConnected" Type="Boolean" />
+          <Property Name="IsBanned" Type="Boolean" />
         </EntityType>
         <EntityType Name="Wishlist">
           <Key>
@@ -303,6 +336,7 @@
           <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Shoes" Relationship="Self.FK__Wishlist__Produc__5535A963" FromRole="Wishlist" ToRole="Shoes" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Wishlist__UserID__5441852A" FromRole="Wishlist" ToRole="Users" />
+          <Property Name="IsAvailable" Type="Boolean" />
         </EntityType>
         <Association Name="FK__Cart__ProductID__4AB81AF0">
           <End Role="Shoes" Type="Self.Shoes" Multiplicity="0..1" />
@@ -428,6 +462,10 @@
             <End Role="ShoeCategory" EntitySet="ShoeCategory" />
             <End Role="Shoes" EntitySet="Shoes" />
           </AssociationSet>
+          <AssociationSet Name="FK__Orders__ProductI__02084FDA" Association="dapperpathModel.FK__Orders__ProductI__02084FDA">
+            <End Role="Shoes" EntitySet="Shoes" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ShoeCategory">
           <Key>
@@ -446,6 +484,20 @@
             </Principal>
             <Dependent Role="Shoes">
               <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__ProductI__02084FDA">
+          <End Type="dapperpathModel.Shoes" Role="Shoes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dapperpathModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shoes">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -468,6 +520,8 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="dapperpathModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
@@ -506,6 +560,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="dapperpathModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsBanned" ColumnName="IsBanned" />
                 <ScalarProperty Name="IsConnected" ColumnName="IsConnected" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -517,6 +572,7 @@
           <EntitySetMapping Name="Wishlist">
             <EntityTypeMapping TypeName="dapperpathModel.Wishlist">
               <MappingFragment StoreEntitySet="Wishlist">
+                <ScalarProperty Name="IsAvailable" ColumnName="IsAvailable" />
                 <ScalarProperty Name="WishlistID" ColumnName="WishlistID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />

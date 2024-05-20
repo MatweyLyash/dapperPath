@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Input; 
 using System.Windows.Navigation;
 
 
@@ -27,8 +27,8 @@ namespace dapperPath.ViewModel
         public ICommand SaveBootsCommand { get; }
         public ICommand OpenDialog { get; }
         private Shoes _currentShoes = new Shoes();
-        private List<String> _categoryCollection;
-        public List<String> CategoryCollection
+        private List<string> _categoryCollection;
+        public List<string> CategoryCollection
         {
             get { return _categoryCollection; }
             set

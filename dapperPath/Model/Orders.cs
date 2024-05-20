@@ -19,7 +19,10 @@ namespace dapperPath.Model
         public string ShippingAddress { get; set; }
         public string ShippingMethod { get; set; }
         public string PaymentMethod { get; set; }
+        public Nullable<decimal> Sum { get; set; }
+        public Nullable<int> ProductID { get; set; }
     
         public virtual Users Users { get; set; }
+        public virtual Shoes Shoes { get; set; }
     }
 }

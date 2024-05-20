@@ -90,7 +90,7 @@
                                         <Setter Property="BorderBrush" Value="Transparent"/>
                                     </Style>
                                 </DockPanel.Resources>
-                                <Button >
+                                <Button Command="{Binding OpenCartPageCommand}">
                                     <Button.Content>
                                         <Image Source="/Resourses/Gallery/basked.png" Stretch="Uniform" />
                                     </Button.Content>
@@ -100,8 +100,7 @@
                                         <Image Source="/Resourses/Gallery/like.png" Stretch="Uniform" />
                                     </Button.Content>
                                 </Button>
-                                <TextBlock Text="{Binding HelloUser}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
-
+                                <Button Content="{Binding HelloUser}" Command="{Binding OpenPersonalCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Width="200" Margin="0,0,20,0"/>
                             </DockPanel>
 
                         </Viewbox>
@@ -126,8 +125,9 @@
                     <Button Content="{DynamicResource Main_Accessories}"  Command="{Binding bootsViewModel.GetAccessories}"/>
                     <Button Command="{Binding NavigateToPageAddEdit}" Content="{DynamicResource Main_Add}"/>
 
-                    <Button x:Name="ru"  Click="rus" Content="Ru" Style="{DynamicResource SelectedLangRu}" Command="{Binding SetRuCommand}"/>
-                    <Button x:Name="en" Click="eng" Content="Eng" Style="{DynamicResource SelectedLangEn}" Command="{Binding SetEngCommand}"/>
+                    <!--<Button x:Name="ru"  Click="rus" Content="Ru" Style="{DynamicResource SelectedLangRu}" Command="{Binding SetRuCommand}"/>
+                    <Button x:Name="en" Click="eng" Content="Eng" Style="{DynamicResource SelectedLangEn}" Command="{Binding SetEngCommand}"/>-->
+                    <Button Content="Диспетчер пользователей" Command="{Binding OpenDispatcherCommand}"/>
                     <Button x:Name="lightTheme" Click="ChangeLightTheme" Content="Light"/>
                     <Button x:Name="darlTheme" Click="ChangeDarkTheme" Content="Dark"/>
                 </StackPanel>

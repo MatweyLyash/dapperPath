@@ -4,8 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:dapperPath.CustomControls"
+             xmlns:converter="clr-namespace:dapperPath.Resourses"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1300">
+    <UserControl.Resources>
+        <converter:NotZeroConverter x:Key="NotZeroConverter" />
+        <Style x:Key="StrikethroughStyle" TargetType="TextBlock">
+            <Setter Property="TextDecorations" Value="Strikethrough"/>
+        </Style>
+        <converter:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     <Border CornerRadius="20" BorderBrush="red" Background="white" BorderThickness="3"  Height="200"  Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=ActualWidth}" Margin="0,0,10,0">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -20,11 +28,22 @@
             </Grid.RowDefinitions>
             <Image Source="{Binding Shoes.Image}" Grid.RowSpan="3" Margin="0,10,0,10"/>
             <TextBlock Text="{Binding Shoes.Title}" Grid.Column="1" FontSize="30"/>
-            <TextBlock Text="{Binding Shoes.Price}" Grid.Row="1" Grid.Column="1" FontSize="30"/>
-            <TextBlock Text="{Binding Size}" Grid.Row="2" Grid.Column="1" FontSize="30"/>
-            <TextBlock Text="в наличии или нет" Grid.Column="2" FontSize="30"/>
-            <Button Content="Добавить в корзину" Grid.Row="1" Grid.Column="2" Command="{Binding AddBaketCommand}"/> 
-            <Button Content="Удалить из списка" Grid.Row="2" Grid.Column="2" Command="{Binding DeleteFromWishList}"/>
+            <TextBlock Grid.Row="1" FontSize="30"  Grid.Column="1">
+                <ContentControl>
+                    <ContentControl.Content>
+                        <MultiBinding Converter="{StaticResource NotZeroConverter}">
+                            <Binding Path="Shoes.Price"/>
+                            <Binding Path="Shoes.Sale"/>
+                        </MultiBinding>
+                    </ContentControl.Content>
+                </ContentControl>
+            </TextBlock>
+            <TextBlock Text="Размер"  Grid.Row="2" Grid.Column="1" FontSize="30"/>
+            <TextBlock Text="{Binding Size}" Grid.Row="2" Grid.Column="1" FontSize="30" HorizontalAlignment="Center"/>
+            <TextBlock Text="В наличии" Grid.Column="2" FontSize="30" Visibility="{Binding IsAvailable, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <TextBlock Text="Нет наличия" Grid.Column="2" FontSize="30" Visibility="{Binding IsAvailable, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+            <Button Content="Добавить в корзину" Grid.Row="1" Grid.Column="2" Command="{Binding DataContext.AddBasketCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}, Mode=FindAncestor}}"  CommandParameter="{Binding}"/>
+            <Button Content="Удалить из списка" Grid.Row="2" Grid.Column="2" Command="{Binding DataContext.DeleteFromWishList, RelativeSource={RelativeSource AncestorType={x:Type Page}, Mode=FindAncestor}}"  CommandParameter="{Binding}"/>
         </Grid>
     </Border>
 </UserControl>

@@ -58,6 +58,12 @@ namespace dapperPath.ViewModel
             if (users.Any(u => u.Username == Login))
             {
                 MessageBox.Show("Пользователь с таким логином уже существует");
+                return;
+            }
+            if (Login.Length < 2)
+            {
+                MessageBox.Show("Слишком короткий логин");
+                return;
             }
             user.Username = Login;
             

@@ -158,6 +158,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomControls\CartShoe.xaml.cs">
+      <DependentUpon>CartShoe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\PrevCart.xaml.cs">
+      <DependentUpon>PrevCart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\Review.xaml.cs">
       <DependentUpon>Review.xaml</DependentUpon>
     </Compile>
@@ -177,12 +183,19 @@
     <Compile Include="Model\ShoeCategory.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Resourses\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Resourses\NotZeroConverter.cs" />
     <Compile Include="ViewModel\ActiveUser.cs" />
     <Compile Include="ViewModel\AddEditViewModel.cs" />
     <Compile Include="ViewModel\AutorizationViewModel.cs" />
+    <Compile Include="ViewModel\CardPageViewModel.cs" />
     <Compile Include="ViewModel\CurrentShoesViewModel.cs" />
+    <Compile Include="ViewModel\DispatcherViewModel.cs" />
+    <Compile Include="ViewModel\OrderViewModel.cs" />
     <Compile Include="ViewModel\WishListViewModel.cs" />
+    <Compile Include="View\CardPage.xaml.cs">
+      <DependentUpon>CardPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CurrentShoe.xaml.cs">
       <DependentUpon>CurrentShoe.xaml</DependentUpon>
     </Compile>
@@ -197,6 +210,15 @@
     <Compile Include="View\CurrentShoesPage.xaml.cs">
       <DependentUpon>CurrentShoesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DispatcherPage.xaml.cs">
+      <DependentUpon>DispatcherPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Order.xaml.cs">
+      <DependentUpon>Order.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PersonalCabinet.xaml.cs">
+      <DependentUpon>PersonalCabinet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Registration.xaml.cs">
       <DependentUpon>Registration.xaml</DependentUpon>
     </Compile>
@@ -206,6 +228,14 @@
     <Compile Include="View\Wishlist.xaml.cs">
       <DependentUpon>Wishlist.xaml</DependentUpon>
     </Compile>
+    <Page Include="CustomControls\CartShoe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\PrevCart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomControls\Review.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -246,6 +276,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CurrentShoe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -259,6 +293,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CurrentShoesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DispatcherPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,6 +315,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resourses\style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Order.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PersonalCabinet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -356,6 +402,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="ViewModel\PersonalCabinetViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

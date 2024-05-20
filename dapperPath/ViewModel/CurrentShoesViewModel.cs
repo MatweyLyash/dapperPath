@@ -179,23 +179,17 @@ namespace dapperPath.ViewModel
                 RaisePropertyChanged(nameof(Sex));
             }
         }
-
+        private int _categoryID;
         public int CategoryID
         {
+            set
+            {
+                _categoryID = value;
+            }
             get
             {
-                Dictionary<string, int> categoriesDict = new Dictionary<string, int>()
-                {
-                    {"Кроссовки",1 },{ "Ботинки",2},{ "Туфли",5},{ "Спортивная",3},{ "Аксессуары",4}
-                };
-                if (Category != null)
-                {
-                    return categoriesDict[Category];
-                }
-                else
-                {
-                    return 0;
-                }
+                return _categoryID;
+                RaisePropertyChanged(nameof(CategoryID));
             }
 
         }
@@ -285,6 +279,7 @@ namespace dapperPath.ViewModel
         public ICommand SendReviewCommand { get; }
         public ICommand BackCommand { get; }
         public ICommand AddWishListCommand { get; }
+        public ICommand AddBasketCommand { get; }
         public ICommand SetSizeCommand { get; }
         public ICommand SetSizeUnCommand { get; }
 
@@ -325,10 +320,27 @@ namespace dapperPath.ViewModel
                 Sale = (decimal)shoes.Sale;
             }
             Sex = shoes.Sex;
-            Category = shoes.ShoeCategory.CategoryName;
+            Dictionary<int, string> categoryDict = new Dictionary<int, string>
+            {
+                { 1, "Кроссовки" },
+                { 2, "Ботинки" },
+                { 3, "Спортивная" },
+                { 4, "Аксессуары" },
+                { 5, "Туфли" }
+            };
+            CategoryID = (int)shoes.CategoryID;
+            if (categoryDict.TryGetValue(CategoryID, out string category))
+            {
+                Category = category;
+            }
+            else
+            {
+                Category = null;
+            }
             BackCommand = new RelayCommand(Back);
             SendReviewCommand = new RelayCommand(SendReview);
             AddWishListCommand = new RelayCommand(AddWishList);
+            AddBasketCommand = new RelayCommand(AddBasket);
             SetSizeCommand = new RelayCommand<SizesClass>(setSize);
             SetSizeUnCommand = new RelayCommand<SizesClass>(setUnSize);
         }
@@ -337,7 +349,8 @@ namespace dapperPath.ViewModel
             List<string> numberList = new List<string>();
             try
             {
-                if(sizes.Contains(" "))
+                if (sizes == null) { return numberList; }
+                else if (sizes.Contains(" "))
                 {
                     string[] numberStrings = sizes.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -351,7 +364,7 @@ namespace dapperPath.ViewModel
                 {
                     numberList.Add(sizes);
                 }
-                
+
             }
             catch
             {
@@ -405,6 +418,11 @@ namespace dapperPath.ViewModel
         }
         private void SendReview()
         {
+            if (MyReview.Length < 6|| string.IsNullOrWhiteSpace(MyReview))
+            {
+                MessageBox.Show("Напишите более развёрнутый отзыв");
+                return;
+            }
             Review.ReviewText = MyReview;
             Review.ProductID = CurrentShoe.ProductID;
             Review.UserID = User.UserID;
@@ -454,6 +472,37 @@ namespace dapperPath.ViewModel
                 MessageBox.Show("Добавлено в желаемое");
             }
             catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        private void AddBasket()
+        {
+            Cart cart = new Cart();
+            if (CurrentSize != null && CurrentUnSize == null)
+            {
+                cart.Size = CurrentSize.Size;
+            }
+            else if (CurrentSize == null && CurrentUnSize != null)
+            {
+                MessageBox.Show("Пару с отсутствующим размером нельзя добавить в корзину");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Не указан размер пары");
+                return;
+            }
+            cart.ProductID = CurrentShoe.ProductID;
+            cart.UserID = ActiveUser.Users.UserID;
+            try
+            {
+                dapperpathEntities.GetContext().Cart.Add(cart);
+                dapperpathEntities.GetContext().SaveChanges();
+
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

@@ -68,7 +68,11 @@ namespace dapperPath.ViewModel
         {
             Users user = new Users();
             user.Username = Login;
-
+            if (Password == null)
+            {
+                MessageBox.Show("пароль не считан");
+                return;
+            }
             if (Password.Length < 8 || !Password.Any(char.IsUpper) || !Password.Any(char.IsLower) || !Password.Any(char.IsDigit))
             {
                 MessageBox.Show("Пароль должен содержать более 8 символов, символ нижнего и верхнуго регистра, а также число");
@@ -102,10 +106,14 @@ namespace dapperPath.ViewModel
                 window.Close();
                 main.Show();
             }
-            else if(users.Any(u => u.Username == user.Username) && users.Any(u => u.PasswordHash == pas))
+            else if(users.Any(u => u.Username == user.Username) && users.Any(u => u.PasswordHash == pas&&u.IsBanned==false))
             {
                 AdminUser = users.Where(u => u.Username == user.Username && u.PasswordHash==pas).FirstOrDefault();
                 MessageBox.Show("привет пользователь");
+            }else if(users.Any(u => u.Username == user.Username) && users.Any(u => u.PasswordHash == pas && u.IsBanned == true))
+            {
+                MessageBox.Show("Вы заблокированы((9(");
+                return;
             }
             else
             {

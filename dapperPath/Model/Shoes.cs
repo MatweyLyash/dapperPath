@@ -20,6 +20,7 @@ namespace dapperPath.Model
             this.Cart = new HashSet<Cart>();
             this.Reviews = new HashSet<Reviews>();
             this.Wishlist = new HashSet<Wishlist>();
+            this.Orders = new HashSet<Orders>();
         }
     
         public int ProductID { get; set; }
@@ -41,5 +42,7 @@ namespace dapperPath.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Wishlist> Wishlist { get; set; }
         public virtual ShoeCategory ShoeCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }
