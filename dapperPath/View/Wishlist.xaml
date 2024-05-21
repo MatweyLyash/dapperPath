@@ -19,7 +19,7 @@
                 <RowDefinition Height="355*"/>
                 <RowDefinition Height="44*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Желамоемое" FontSize="30" Margin="20,10,0,0"/>
+            <TextBlock Text="Желаемое" FontSize="30" Margin="20,10,0,0"/>
             <ListBox Name="ReviewsListBox" ItemsSource="{Binding UserWishList}" Grid.Row="1">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>

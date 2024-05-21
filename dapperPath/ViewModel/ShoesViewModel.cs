@@ -132,17 +132,17 @@ namespace dapperPath.ViewModel
         }
         public void FilterBySneakers()
         {
-            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 1));
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 11));
             OnPropertyChanged(nameof(Shoes));
         }
         public void FilterByBoots()
         {
-            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 2));
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 12));
             OnPropertyChanged(nameof(Shoes));
         }
         public void FilterBySport()
         {
-            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 3));
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 13));
             OnPropertyChanged(nameof(Shoes));
 
         }
@@ -154,7 +154,7 @@ namespace dapperPath.ViewModel
         }
         public void FilterByPumps()
         {
-            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 5));
+            Shoes = new ObservableCollection<Shoes>(_totalShoes.Where(shoe => shoe.CategoryID == 14));
             OnPropertyChanged(nameof(Shoes));
         }
         public void FilterShoes(string filterText)
@@ -216,7 +216,7 @@ namespace dapperPath.ViewModel
                 Shoes Shoes = dapperpathEntities.GetContext().Shoes.Where(s => s.ProductID ==shoes.ProductID).FirstOrDefault();
                 dapperpathEntities.GetContext().Shoes.Remove(Shoes);
                 dapperpathEntities.GetContext().SaveChanges();
-                MessageBox.Show("наверное удалено");
+                MessageBox.Show("Удалено");
                 CustomNavigate.RefreshPeak(new ShoesPage(new ShoesViewModel()));
 
             }

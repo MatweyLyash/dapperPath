@@ -16,17 +16,13 @@ namespace dapperPath.ViewModel
 
         public static void NavigateTo(Page page)
         {
-            // Добавляем текущую страницу на стек
             if (currentPageIndex >= 0 && currentPageIndex < pageStack.Count)
             {
                 pageStack.Push(pageStack.ElementAt(currentPageIndex));
             }
 
-            // Переходим на новую страницу
             pageStack.Push(page);
             currentPageIndex = pageStack.Count - 1;
-
-            // Вызываем событие об изменении текущей страницы
             OnCurrentPageChanged(page);
         }
         public static void NavigateShoe(Page page)

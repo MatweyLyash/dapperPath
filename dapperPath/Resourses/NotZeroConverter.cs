@@ -27,7 +27,7 @@ namespace dapperPath.Resourses
 
             if (values[0] is decimal price1 && values[1] is decimal discount1 && discount1 == 0)
             {
-                return new Run($"{price1} руб.");
+                return new Run($"{price1} BYN");
             }
 
             return null;

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:dapperPath.View"
+      xmlns:usercontrols="clr-namespace:dapperPath.CustomControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PersonalCabinet">
@@ -15,18 +16,31 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50*"/>
-                <RowDefinition Height="108*"/>
-                <RowDefinition Height="259*"/>
-                <RowDefinition Height="33*"/>
+                <RowDefinition Height="44*" />
+                <RowDefinition Height="83*" />
+                <RowDefinition Height="42*" />
+                <RowDefinition Height="234*" />
+                <RowDefinition Height="47*" />
             </Grid.RowDefinitions>
             <TextBlock Text="Личный кабинет" FontSize="30" Margin="20,0,0,0"/>
             <TextBlock Text="{Binding Id}" Grid.Row="1" VerticalAlignment="Top" FontSize="30" Margin="20,0,0,0" Height="40"/>
             <TextBlock Text="{Binding Name}" Grid.Row="1" FontSize="30" VerticalAlignment="Bottom" Margin="20,0,0,0" Height="40"/>
             <TextBlock Text="{Binding Amount}" Grid.Row="1" Grid.Column="1" FontSize="30" VerticalAlignment="Top" Height="40"/>
-            <TextBlock Text="{Binding AllOrdersSum}" Grid.Row="1" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" Height="40" Margin="0,68,0,0"/>
-
-            <Button Command="{Binding BackCommand}" Content="Назад" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+            <TextBlock Text="{Binding AllOrdersSum}" Grid.Row="1" Grid.Column="1" FontSize="30" VerticalAlignment="Bottom" Height="40" Margin="0,43,0,0"/>
+            <TextBlock Text="История заказов" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="30"/>
+            <ListBox Name="OrderCartListBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <usercontrols:PersonalShoe DataContext="{Binding}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding BackCommand}" Content="Назад" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Width="71" Margin="0,0,30,0" />
         </Grid>
     </Border>
 </Page>

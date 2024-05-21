@@ -101,7 +101,7 @@ namespace dapperPath.ViewModel
                 {
                     MessageBox.Show(ex.Message);
                 }
-                MainWindow main = new MainWindow(new MainViewModel(AdminUser));
+                MainWindow main = new MainWindow(new MainViewModel(closedAdmin));
                 var window = Application.Current.MainWindow;
                 window.Close();
                 main.Show();
@@ -109,7 +109,10 @@ namespace dapperPath.ViewModel
             else if(users.Any(u => u.Username == user.Username) && users.Any(u => u.PasswordHash == pas&&u.IsBanned==false))
             {
                 AdminUser = users.Where(u => u.Username == user.Username && u.PasswordHash==pas).FirstOrDefault();
-                MessageBox.Show("привет пользователь");
+                UserMainWindow main = new UserMainWindow(new MainViewModel(AdminUser));
+                var window = Application.Current.MainWindow;
+                window.Close();
+                main.Show();
             }else if(users.Any(u => u.Username == user.Username) && users.Any(u => u.PasswordHash == pas && u.IsBanned == true))
             {
                 MessageBox.Show("Вы заблокированы((9(");

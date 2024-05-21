@@ -29,6 +29,7 @@ namespace dapperPath.Model
         public Nullable<bool> Status { get; set; }
         public Nullable<bool> IsConnected { get; set; }
         public Nullable<bool> IsBanned { get; set; }
+        public Nullable<bool> IsPending { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Cart { get; set; }

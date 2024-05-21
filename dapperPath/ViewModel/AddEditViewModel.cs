@@ -141,7 +141,7 @@ namespace dapperPath.ViewModel
             {
                 Dictionary<string, int> categoriesDict = new Dictionary<string, int>()
                 {
-                    {"Кроссовки",1 },{ "Ботинки",2},{ "Туфли",5},{ "Спортивная",3},{ "Аксессуары",4}
+                    {"Кроссовки",11 },{ "Ботинки",12},{ "Спортивная",13},{ "Туфли",14}
                 };
                 if (Category != null)
                 {
@@ -164,7 +164,8 @@ namespace dapperPath.ViewModel
                 RaisePropertyChanged(nameof(Category));
             }
         }
-
+        public string oldAvaible { get; set; }
+        public string[] oldUnAvaible { get; set; }
         public AddEditViewModel(Shoes selectedItem)
         {
             _categoryCollection = dapperpathEntities.GetContext().ShoeCategory.Select(c => c.CategoryName).ToList();
@@ -186,6 +187,8 @@ namespace dapperPath.ViewModel
                     CategoryID = selectedItem.CategoryID
 
                 };
+                oldAvaible = selectedItem.AvailableSizes;
+                oldUnAvaible = selectedItem.UnavailableSizes.Split(' ');
                 Title = selectedItem.Title;
                 Brand = selectedItem.Brand;
                 UnavaibilitySizes = selectedItem.UnavailableSizes;
@@ -260,13 +263,45 @@ namespace dapperPath.ViewModel
             {
                 error.AppendLine("Укажите доступные размеры");
             }
+            if (Sale > Price)
+            {
+                error.AppendLine("Цена с учётом скидки не может быть выше изначальной");
+            }
 
             if (error.Length > 0)
             {
                 MessageBox.Show(error.ToString());
                 return;
             }
-
+            List<Users> pendingUsers = new List<Users>();
+            foreach (var item in oldUnAvaible)
+            {
+                if (AvaibilitySizes.Contains(item))
+                {
+                    Users pendingUser = dapperpathEntities.GetContext().Users.Where(u => u.Wishlist.Any(w => w.Size == item && (bool)!w.IsAvailable)).FirstOrDefault();
+                    pendingUsers.Add(pendingUser);
+                }
+            }
+            foreach (var item in pendingUsers)
+            {
+                try
+                {
+                    item.IsPending = true;
+                Users someUser = dapperpathEntities.GetContext().Users.Where(u => u.UserID == item.UserID).FirstOrDefault();
+                someUser.IsPending = true;
+                List<Model.Wishlist>someWishlist= someUser.Wishlist.Where(w => w.IsAvailable == false).ToList();
+                foreach (var item1 in someWishlist)
+                {
+                    item1.IsAvailable = true;
+                }
+                
+                    dapperpathEntities.GetContext().SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
             if (_currentShoes.ProductID == 0)
             {
                 dapperpathEntities.GetContext().Shoes.Add(_currentShoes);

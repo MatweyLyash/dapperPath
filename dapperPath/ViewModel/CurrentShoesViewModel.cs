@@ -303,8 +303,13 @@ namespace dapperPath.ViewModel
             {
                 SizesCurrentShoe.Add(new SizesClass(item));
             }
+            
             foreach (var item in Unsizes)
             {
+                if(item=="")
+                {
+                    UnSizesCurrentShoe.Add(null);
+                }
                 UnSizesCurrentShoe.Add(new SizesClass(item));
             }
 
@@ -322,11 +327,11 @@ namespace dapperPath.ViewModel
             Sex = shoes.Sex;
             Dictionary<int, string> categoryDict = new Dictionary<int, string>
             {
-                { 1, "Кроссовки" },
-                { 2, "Ботинки" },
-                { 3, "Спортивная" },
-                { 4, "Аксессуары" },
-                { 5, "Туфли" }
+                { 11, "Кроссовки" },
+                { 12, "Ботинки" },
+                { 13, "Спортивная" },
+                { 14, "Туфли"}
+               
             };
             CategoryID = (int)shoes.CategoryID;
             if (categoryDict.TryGetValue(CategoryID, out string category))

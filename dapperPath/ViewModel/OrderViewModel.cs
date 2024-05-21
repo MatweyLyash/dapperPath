@@ -91,7 +91,15 @@ namespace dapperPath.ViewModel
             order = carts;
             foreach (var item in carts)
             {
-                TotalPrice += (double)item.Shoes.Price;
+                if (item.Shoes.Sale == 0)
+                {
+                    TotalPrice += (double)item.Shoes.Price;
+                }
+                else
+                {
+                    TotalPrice += (double)item.Shoes.Sale;  
+                }
+                
 
             }
             BuyCommand = new RelayCommand(Buy);
@@ -144,18 +152,26 @@ namespace dapperPath.ViewModel
             {
                 foreach (var item in order)
                 {
-                    orders.Sum = item.Shoes.Price;
+                    if (item.Shoes.Sale == 0)
+                    {
+                        orders.Sum = item.Shoes.Price;
+                    }
+                    else
+                    {
+                        orders.Sum = item.Shoes.Sale;
+                    }
                     orders.ProductID = item.ProductID;
                     orders.ShippingMethod = Shipping;
                     orders.PaymentMethod = PaymentMethod;
                     orders.ShippingAddress = Adress;
                     orders.UserID = ActiveUser.Users.UserID;
+                    orders.Size = item.Size;
                     dapperpathEntities.GetContext().Orders.Add(orders);
                     dapperpathEntities.GetContext().SaveChanges();
                     
                 }
                 MessageBox.Show("Заказ принят!");
-                (Application.Current.MainWindow as Order).Close();
+                (App.Current.MainWindow as Order).Close();
             }
             catch (Exception ex)
             {

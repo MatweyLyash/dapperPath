@@ -67,11 +67,16 @@ namespace dapperPath.ViewModel
         }
         private void AddPrevCart(Cart cart)
         {
-            if (cart.Shoes.Sale !=0)
+
+            if (cart.Shoes.Sale == 0)
             {
-                cart.Shoes.Price = cart.Shoes.Sale;
+                TotalPrice += (double)cart.Shoes.Price;
             }
-            TotalPrice += (double)cart.Shoes.Price;
+            else
+            {
+                TotalPrice += (double)cart.Shoes.Sale;
+            }
+            
             PrevCartList.Add(cart);
        }
         private void OpenOrder()
@@ -80,8 +85,11 @@ namespace dapperPath.ViewModel
             {
                 MessageBox.Show("Добавьте обуви в заказ");
             }
+            var window = Application.Current.MainWindow;
             Order order = new Order(new OrderViewModel(PrevCartList));
+            Application.Current.MainWindow = order;
             order.ShowDialog();
+            Application.Current.MainWindow = window;
         }
 
 

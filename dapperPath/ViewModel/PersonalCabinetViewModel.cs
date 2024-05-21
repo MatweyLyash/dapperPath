@@ -1,11 +1,13 @@
 ﻿using dapperPath.Model;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace dapperPath.ViewModel
 {
@@ -15,6 +17,8 @@ namespace dapperPath.ViewModel
         public string Name { get; set; }
         public string Amount { get; set; }
         public string AllOrdersSum { get; set; }
+        public ICommand BackCommand { get; }
+        
         public ObservableCollection<Orders> Orders { get; set; }
         public PersonalCabinetViewModel()
         {
@@ -34,8 +38,13 @@ namespace dapperPath.ViewModel
             Name = "Имя пользователя: " + name;
             Amount = "Количество заказов: " + counter;
             AllOrdersSum = "Сумма заказов: " + sum;
+            BackCommand = new RelayCommand(Back);
 
 
+        }
+        private void Back()
+        {
+            CustomNavigate.GoBack();
         }
     }
 }

@@ -11,8 +11,12 @@
     <Border Style="{DynamicResource MainContent}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="61*"/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="68*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
             <DataGrid ItemsSource="{Binding UsersModel}" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding UserID}"/>
@@ -31,6 +35,7 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <Button Content="Назад" Command="{Binding BackCommand}" Grid.Row="1"/>
         </Grid>
     </Border>
 </Page>

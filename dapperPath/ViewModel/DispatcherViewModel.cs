@@ -17,11 +17,13 @@ namespace dapperPath.ViewModel
         public ObservableCollection<Users> UsersModel { get; set; } 
         public ICommand DeleteUserCommand { get; }
         public ICommand ChangeBlockUserCommand { get; }
+        public ICommand BackCommand { get; }
         public DispatcherViewModel()
         {
             UsersModel = new ObservableCollection<Users>(dapperpathEntities.GetContext().Users.Where(u=>u.Status==false).ToList());
             DeleteUserCommand = new RelayCommand<Users>(DeleteUser);
             ChangeBlockUserCommand = new RelayCommand<Users>(ChangeBlock);
+            BackCommand = new RelayCommand(Back);
         }
         private void DeleteUser(Users user)
         {
@@ -56,6 +58,10 @@ namespace dapperPath.ViewModel
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private void Back()
+        {
+            CustomNavigate.GoBack();
         }
     }
 }

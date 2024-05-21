@@ -21,6 +21,7 @@ namespace dapperPath.Model
         public string PaymentMethod { get; set; }
         public Nullable<decimal> Sum { get; set; }
         public Nullable<int> ProductID { get; set; }
+        public string Size { get; set; }
     
         public virtual Users Users { get; set; }
         public virtual Shoes Shoes { get; set; }

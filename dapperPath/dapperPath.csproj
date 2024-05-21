@@ -161,6 +161,9 @@
     <Compile Include="CustomControls\CartShoe.xaml.cs">
       <DependentUpon>CartShoe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\PersonalShoe.xaml.cs">
+      <DependentUpon>PersonalShoe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\PrevCart.xaml.cs">
       <DependentUpon>PrevCart.xaml</DependentUpon>
     </Compile>
@@ -176,7 +179,10 @@
     <Compile Include="CustomControls\SizeButtonUn.xaml.cs">
       <DependentUpon>SizeButtonUn.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\SizesClass.cs" />
+    <Compile Include="CustomControls\UserShoesCard.xaml.cs">
+      <DependentUpon>UserShoesCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resourses\SizesClass.cs" />
     <Compile Include="CustomControls\WishListCard.xaml.cs">
       <DependentUpon>WishListCard.xaml</DependentUpon>
     </Compile>
@@ -225,10 +231,20 @@
     <Compile Include="View\ShoesPage.xaml.cs">
       <DependentUpon>ShoesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserMainWindow.xaml.cs">
+      <DependentUpon>UserMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserShoesPage.xaml.cs">
+      <DependentUpon>UserShoesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Wishlist.xaml.cs">
       <DependentUpon>Wishlist.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomControls\CartShoe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\PersonalShoe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -249,6 +265,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomControls\SizeButtonUn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomControls\UserShoesCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,6 +351,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ShoesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserShoesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

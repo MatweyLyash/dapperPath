@@ -12,7 +12,7 @@
           <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="ProductID" Type="int" />
-          <Property Name="Size" Type="varchar" MaxLength="10" />
+          <Property Name="Size" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -25,6 +25,7 @@
           <Property Name="PaymentMethod" Type="varchar" MaxLength="255" />
           <Property Name="Sum" Type="decimal" Precision="10" Scale="2" />
           <Property Name="ProductID" Type="int" />
+          <Property Name="Size" Type="varchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -68,6 +69,7 @@
           <Property Name="Status" Type="bit" />
           <Property Name="IsConnected" Type="bit" />
           <Property Name="IsBanned" Type="bit" />
+          <Property Name="IsPending" Type="bit" />
         </EntityType>
         <EntityType Name="Wishlist">
           <Key>
@@ -263,7 +265,7 @@
           <Property Name="ProductID" Type="Int32" />
           <NavigationProperty Name="Shoes" Relationship="Self.FK__Cart__ProductID__4AB81AF0" FromRole="Cart" ToRole="Shoes" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Cart__UserID__49C3F6B7" FromRole="Cart" ToRole="Users" />
-          <Property Name="Size" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -278,6 +280,7 @@
           <Property Name="Sum" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="ProductID" Type="Int32" />
           <NavigationProperty Name="Shoes" Relationship="dapperpathModel.FK__Orders__ProductI__02084FDA" FromRole="Orders" ToRole="Shoes" />
+          <Property Name="Size" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -325,6 +328,7 @@
           <Property Name="Status" Type="Boolean" />
           <Property Name="IsConnected" Type="Boolean" />
           <Property Name="IsBanned" Type="Boolean" />
+          <Property Name="IsPending" Type="Boolean" />
         </EntityType>
         <EntityType Name="Wishlist">
           <Key>
@@ -520,6 +524,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="dapperpathModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Sum" ColumnName="Sum" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
@@ -560,6 +565,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="dapperpathModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsPending" ColumnName="IsPending" />
                 <ScalarProperty Name="IsBanned" ColumnName="IsBanned" />
                 <ScalarProperty Name="IsConnected" ColumnName="IsConnected" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

@@ -132,9 +132,30 @@ namespace dapperPath.ViewModel
             CustomNavigate.CurrentPageChanged += OnCurrentPageChanged;
             bootsViewModel = new ShoesViewModel();
             addViewModel = new AddEditViewModel(null);
-            
 
-            CustomNavigate.NavigateTo(new ShoesPage(bootsViewModel));
+            if (ActiveUser.Users.Status == true)
+            {
+                CustomNavigate.NavigateTo(new ShoesPage(bootsViewModel));
+
+            }
+            else
+            {
+                CustomNavigate.NavigateTo(new UserShoesPage(bootsViewModel));
+            }
+            if (ActiveUser.Users.IsPending == true)
+            {
+                MessageBox.Show("Пара из списка вашего желаемых появилась в наличии");
+                Users user = dapperpathEntities.GetContext().Users.Where(u => u.UserID == ActiveUser.Users.UserID).FirstOrDefault();
+                user.IsPending = false;
+                try
+                {
+                    dapperpathEntities.GetContext().SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
 
@@ -154,12 +175,11 @@ namespace dapperPath.ViewModel
         private void GoBack()
         {
             CustomNavigate.GoBack();
-            ShoesViewModel.Instance.RefreshShoes();
+            //ShoesViewModel.Instance.RefreshShoes();
         }
         private void GoNext()
         {
             CustomNavigate.GoForward();
-            
         }
 
         private void ChangeTheme(string themeName)
@@ -212,11 +232,19 @@ namespace dapperPath.ViewModel
             {
                 MessageBox.Show(ex.Message);
             }
-            Autorization autorization = new Autorization();
-            var window = Application.Current.MainWindow;
-            window.Close();
-            App.Current.MainWindow = autorization;
-            autorization.Show();
+
+
+            //Autorization autorization = new Autorization();
+            //try
+            //{
+            //    var window = App.Current.MainWindow as MainWindow;
+            //    window.Close();
+            //    App.Current.MainWindow = autorization;
+            //    var authorization = App.Current.MainWindow as Autorization;
+            //    autorization.Show();
+
+            //}
+            //catch (Exception ex) { MessageBox.Show(ex.Message);}
 
         }
         private void OnCurrentPageChanged(object sender, PageChangedEventArgs e)
