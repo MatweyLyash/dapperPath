@@ -30,7 +30,7 @@ namespace dapperPath.ViewModel
         {
             get
             {
-                Autorization autorization = App.Current.MainWindow as Autorization;
+                Registration autorization = App.Current.MainWindow as Registration;
                 if (autorization != null)
                 {
                     _password = autorization.passwordText.Password;
@@ -75,6 +75,7 @@ namespace dapperPath.ViewModel
             
             string pas=  HashPassword(Password);
             user.PasswordHash = pas;
+            user.IsBanned = false;
             dapperpathEntities.GetContext().Users.Add(user);
             try
             {

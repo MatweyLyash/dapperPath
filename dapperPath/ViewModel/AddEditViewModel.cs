@@ -251,9 +251,9 @@ namespace dapperPath.ViewModel
             {
                 error.AppendLine("Укажите категорию пары");
             }
-            if (string.IsNullOrWhiteSpace(_currentShoes.Price.ToString()))
+            if (string.IsNullOrWhiteSpace(_currentShoes.Price.ToString())||_currentShoes.Price<0)
             {
-                error.AppendLine("Укажите цену пары");
+                error.AppendLine("Укажите корректную цену пары");
             }
             if (_currentShoes.Sex != "W" && _currentShoes.Sex != "M")
             {
@@ -286,7 +286,7 @@ namespace dapperPath.ViewModel
             {
                 try
                 {
-                    item.IsPending = true;
+                item.IsPending = true;
                 Users someUser = dapperpathEntities.GetContext().Users.Where(u => u.UserID == item.UserID).FirstOrDefault();
                 someUser.IsPending = true;
                 List<Model.Wishlist>someWishlist= someUser.Wishlist.Where(w => w.IsAvailable == false).ToList();

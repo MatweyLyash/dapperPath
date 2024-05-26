@@ -57,6 +57,11 @@ namespace dapperPath.View
         {
             App.ChangeTheme("/Resourses/Theme/dark.xaml");
         }
+
+        private void MainContent_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
     }
 
 }
